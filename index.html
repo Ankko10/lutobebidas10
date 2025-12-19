@@ -18,7 +18,8 @@
             --dark-bg-main: #121212; 
             --dark-bg-secondary: #1a1a1a;
             --text-main: #f0f0f0;
-            --neon-glow: rgba(255, 255, 255, 0.6);
+            --neon-glow: rgba(255, 255, 255, 0.5);
+            --accent-green: #25D366;
         }
         
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -183,7 +184,7 @@
         
         .products-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 0 12px 100px 12px; }
         
-        /* --- NUEVO ESTILO: TARJETA ANIMADA Y NEON --- */
+        /* TARJETAS CON ZOOM Y NEON */
         .product-card { 
             background: var(--dark-bg-secondary); 
             border: 1px solid var(--border-subtle); 
@@ -192,43 +193,22 @@
             text-align: center; 
             padding-bottom: 12px; 
             cursor: pointer; 
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; /* Transición suave */
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
         }
-
-        /* Efecto al pasar el mouse o tocar */
         .product-card:hover {
-            transform: scale(1.03) translateY(-5px); /* Zoom y levantamiento */
-            box-shadow: 0 0 15px var(--neon-glow), 0 0 30px rgba(255,255,255,0.1); /* Efecto Neón */
-            border-color: var(--primary-white);
-            z-index: 10;
+            transform: scale(1.02);
+            border-color: #fff;
+            box-shadow: 0 0 15px var(--neon-glow);
+            z-index: 5;
         }
-
         .product-img { width: 100%; height: 150px; object-fit: contain; padding: 15px; background: #fff; }
         .product-info { padding: 12px 8px 0 8px; }
         .product-name { font-weight: 500; font-size: 0.85rem; color: #fff; min-height: 34px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 5px; }
         .price { font-weight: 700; font-size: 1rem; color: var(--primary-white); display: block; margin: 6px 0 10px 0; }
+        .promo-badge { background-color: #e74c3c; color: white; font-size: 0.6rem; padding: 2px 5px; border-radius: 2px; margin-left: 5px; font-weight: 700; vertical-align: middle; }
         .add-cart-btn { background: transparent; color: var(--primary-white); border: 1px solid rgba(255,255,255,0.3); padding: 8px 0; width: 100%; cursor: pointer; font-weight: 600; border-radius: 2px; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; }
         .add-cart-btn:hover { background: var(--primary-white); color: #000; border-color: var(--primary-white); }
 
-        /* VISTA DETALLE PRODUCTO */
-        #product-detail-view { display: none; padding-top: 20px; min-height: 90vh; }
-        .detail-container { max-width: 1000px; margin: 0 auto; padding: 20px; }
-        .detail-main { display: flex; flex-direction: column; gap: 30px; }
-        .detail-img-container { background: #fff; border-radius: 8px; padding: 40px; text-align: center; }
-        .detail-img { width: 100%; max-width: 300px; height: auto; object-fit: contain; }
-        .detail-info { color: white; }
-        .detail-title { font-size: 1.8rem; margin: 0 0 10px 0; }
-        .detail-price { font-size: 2rem; font-weight: 700; color: var(--primary-white); margin-bottom: 20px; display: block; }
-        .detail-desc { color: #aaa; margin-bottom: 30px; line-height: 1.6; }
-        .detail-add-btn { width: 100%; padding: 15px; font-size: 1rem; background: white; color: black; border: none; font-weight: 700; text-transform: uppercase; border-radius: 4px; cursor: pointer; margin-bottom: 40px; }
-        
-        .related-section { margin-top: 50px; border-top: 1px solid var(--border-subtle); padding-top: 30px; }
-        .related-title { font-size: 1.2rem; margin-bottom: 20px; color: #ccc; }
-        .related-scroll { display: flex; gap: 15px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
-        .related-scroll::-webkit-scrollbar { display: none; }
-        .related-card { min-width: 160px; max-width: 160px; background: var(--dark-bg-secondary); border: 1px solid var(--border-subtle); border-radius: 4px; padding-bottom: 10px; text-align: center; cursor: pointer; }
-        .related-img { width: 100%; height: 100px; object-fit: contain; background: white; padding: 10px; }
-        
         /* VISTA CARRITO */
         #cart-view { display: none; padding: 20px; min-height: 80vh; }
         .cart-item { display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border-subtle); padding: 15px 0; }
@@ -265,13 +245,25 @@
         .sidebar-links li { margin-bottom: 25px; }
         .sidebar-links a { color: #ccc; text-decoration: none; font-size: 1.1rem; font-weight: 500; display: block; letter-spacing: 1px; }
 
-        /* MODALES */
+        /* MODALES Y POPUP */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 10000; display: none; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
-        .modal-box { background: #1a1a1a; padding: 35px 25px; border-radius: 8px; width: 90%; max-width: 400px; text-align: center; border: 1px solid var(--border-subtle); box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+        .modal-box { background: #1a1a1a; padding: 35px 25px; border-radius: 8px; width: 90%; max-width: 400px; text-align: center; border: 1px solid var(--border-subtle); box-shadow: 0 20px 50px rgba(0,0,0,0.5); max-height: 90vh; overflow-y: auto; }
         .modal-option-label { display:flex; align-items:center; gap:12px; margin-bottom:12px; padding:16px; background:rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius:4px; text-align:left; color: #fff; font-size: 0.95rem; cursor:pointer; }
         .modal-btn { width: 100%; padding: 16px; margin-top: 20px; border: none; font-weight: 700; border-radius: 4px; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; cursor: pointer; }
         .btn-confirm { background: var(--primary-white); color: var(--dark-bg-main); }
         .btn-cancel { background: transparent; color: #888; border: 1px solid #444; }
+        
+        /* ESTILOS ESPECIFICOS POPUP PRODUCTO */
+        .popup-img { width: 150px; height: 150px; object-fit: contain; background: white; border-radius: 8px; padding: 10px; margin-bottom: 15px; }
+        .popup-title { font-size: 1.4rem; color: white; margin-bottom: 5px; line-height: 1.2; }
+        .popup-price { font-size: 1.6rem; color: white; font-weight: 700; display: block; margin-bottom: 15px; }
+        .popup-desc { color: #aaa; margin-bottom: 20px; font-size: 0.9rem; }
+
+        /* FORMULARIOS */
+        .form-input { width: 100%; padding: 14px; background: #222; border: 1px solid #444; color: white; border-radius: 4px; margin-bottom: 10px; font-family: 'Montserrat', sans-serif; }
+        .alias-container { display: flex; justify-content: space-between; align-items: center; background: #2a2a2a; padding: 10px; border-radius: 4px; margin-top: 10px; border: 1px solid #444; }
+        .alias-text { font-weight: 700; color: white; letter-spacing: 1px; }
+        .copy-btn { background: #444; border: none; color: white; padding: 5px 10px; border-radius: 2px; font-size: 0.7rem; cursor: pointer; }
 
         /* MEDIA QUERY: DESKTOP */
         @media (min-width: 769px) {
@@ -293,11 +285,6 @@
             .info-text-container { width: 50%; display: flex; flex-direction: column; justify-content: center; padding: 60px; text-align: left; }
             .products-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
             .floating-order-btn { width: auto; right: 40px; left: auto; bottom: 40px; padding: 18px 40px; }
-            
-            /* Detalle Producto Desktop */
-            .detail-main { flex-direction: row; align-items: flex-start; }
-            .detail-img-container { flex: 1; }
-            .detail-info { flex: 1; padding-left: 40px; }
         }
     </style>
 </head>
@@ -438,19 +425,6 @@
         </div>
     </div>
 
-    <div id="product-detail-view">
-        <div class="detail-container">
-            <button onclick="showShop()" style="background:none; border:none; color:#999; margin-bottom:20px; cursor:pointer;">← Volver al catálogo</button>
-            <div id="detail-content" class="detail-main">
-                </div>
-            <div class="related-section">
-                <div class="related-title">También te puede interesar</div>
-                <div id="related-products-container" class="related-scroll">
-                    </div>
-            </div>
-        </div>
-    </div>
-
     <div id="cart-view">
         <div class="container" style="max-width: 800px; margin: 0 auto;">
             <h2 class="serif-font" style="border-bottom: 1px solid var(--border-subtle); padding-bottom: 15px; margin-bottom: 25px; color: var(--primary-white); font-size:1.6rem;">Tu Pedido</h2>
@@ -479,15 +453,26 @@
         <i class="fas fa-shopping-bag"></i> <span id="float-btn-text">HACÉ TU PEDIDO</span>
     </button>
 
+    <div id="product-popup" class="modal-overlay" onclick="closeModal('product-popup')">
+        <div class="modal-box" onclick="event.stopPropagation()">
+            <img id="popup-img" src="" class="popup-img">
+            <div id="popup-title" class="popup-title serif-font"></div>
+            <span id="popup-price" class="popup-price"></span>
+            <p id="popup-desc" class="popup-desc"></p>
+            <button id="popup-add-btn" class="modal-btn btn-confirm">AGREGAR AL CARRITO</button>
+            <button class="modal-btn btn-cancel" onclick="closeModal('product-popup')">Cerrar</button>
+        </div>
+    </div>
+
     <div id="delivery-modal" class="modal-overlay">
         <div class="modal-box">
             <h3 class="serif-font" style="font-size:1.5rem; margin-bottom:20px; color:#fff;">Entrega</h3>
             <div style="text-align:left; margin: 20px 0;">
                 <label class="modal-option-label">
-                    <input type="radio" name="delivery" value="delivery" checked> 🛵 Envío a Domicilio
+                    <input type="radio" name="delivery" value="delivery" checked onclick="toggleAddressField(true)"> 🛵 Envío a Domicilio
                 </label>
                 <label class="modal-option-label">
-                    <input type="radio" name="delivery" value="retiro"> 🏪 Retiro en Local
+                    <input type="radio" name="delivery" value="retiro" onclick="toggleAddressField(false)"> 🏪 Retiro en Local
                 </label>
             </div>
             <button class="modal-btn btn-confirm" onclick="nextStepToPayment()">SIGUIENTE</button>
@@ -497,17 +482,34 @@
 
     <div id="payment-modal" class="modal-overlay">
         <div class="modal-box">
-            <h3 class="serif-font" style="font-size:1.5rem; margin-bottom:20px; color:#fff;">Pago</h3>
+            <h3 class="serif-font" style="font-size:1.5rem; margin-bottom:20px; color:#fff;">Finalizar Compra</h3>
+            
+            <div style="text-align:left; margin-bottom:15px; border-bottom:1px solid #333; padding-bottom:15px;">
+                <input type="text" id="customer-name" class="form-input" placeholder="Tu Nombre">
+                <div id="address-field-container">
+                    <input type="text" id="customer-address" class="form-input" placeholder="Tu Dirección">
+                </div>
+            </div>
+
             <div style="text-align:left; margin: 20px 0;">
-                <label onclick="toggleCashInput(true)" class="modal-option-label">
+                <h4 style="color:#aaa; font-size:0.8rem; text-transform:uppercase; margin-bottom:10px;">Método de Pago</h4>
+                <label onclick="togglePaymentFields('efectivo')" class="modal-option-label">
                     <input type="radio" name="payment" value="efectivo" checked> 💵 Efectivo
                 </label>
                 <div id="cash-input-wrapper" style="margin-left: 15px; margin-bottom: 10px;">
-                    <input type="number" id="cash-amount" placeholder="¿Con cuánto abonas?" style="width:100%; padding:12px; border-radius:4px; background:#222; border:1px solid #444; color:white;">
+                    <input type="number" id="cash-amount" placeholder="¿Con cuánto abonas?" class="form-input">
                 </div>
-                <label onclick="toggleCashInput(false)" class="modal-option-label">
+                
+                <label onclick="togglePaymentFields('transferencia')" class="modal-option-label">
                     <input type="radio" name="payment" value="transferencia"> 📱 Transferencia
                 </label>
+                <div id="transfer-info-wrapper" style="display:none; margin-left: 15px; margin-bottom: 10px;">
+                    <div class="alias-container">
+                        <span class="alias-text">luto.bebidas</span>
+                        <button class="copy-btn" onclick="copyAlias()">COPIAR</button>
+                    </div>
+                    <small style="color:#aaa; font-size:0.7rem; margin-top:5px; display:block;">*Envía el comprobante por WhatsApp</small>
+                </div>
             </div>
             <button class="modal-btn btn-confirm" onclick="finalizeOrder()">ENVIAR PEDIDO</button>
             <button class="modal-btn btn-cancel" onclick="closeModal('payment-modal')">Atrás</button>
@@ -521,22 +523,25 @@
 
         // DATOS
         const products = [
-            // --- NUEVOS COMBOS VINOS ---
-            { id: 940, name: "2x Santa Julia Blanco 750ml", category: "promociones-navidenas", price: 12500, img: "2x_santajulia_blanco.png" },
-            { id: 941, name: "2x Canciller Dulce 1125ml", category: "promociones-navidenas", price: 5000, img: "2x_canciller.png" },
-            { id: 942, name: "2x Dilema Blanco", category: "promociones-navidenas", price: 7000, img: "2x_dilema.png" },
-            { id: 943, name: "2x Prófugo Blanco", category: "promociones-navidenas", price: 8000, img: "2x_profugo_blanco.png" },
-            { id: 944, name: "2x Luigi Bosca Chardonnay", category: "promociones-navidenas", price: 19000, img: "2x_luigi_chardonnay.png" },
-            { id: 945, name: "2x Santa Julia Tinto Dulce", category: "promociones-navidenas", price: 12000, img: "2x_santajulia_dulce.png" },
-            { id: 946, name: "2x Prófugo Tinto", category: "promociones-navidenas", price: 6000, img: "2x_profugo_tinto.png" },
-            { id: 947, name: "2x Cordero Piel de Lobo", category: "promociones-navidenas", price: 8500, img: "2x_cordero.png" },
-            { id: 948, name: "Caja x6 Alma Mora", category: "promociones-navidenas", price: 25000, img: "caja_almamora.png" },
-            { id: 949, name: "2x Otro Loco Más", category: "promociones-navidenas", price: 7000, img: "2x_otrolocomas.png" },
-            { id: 950, name: "2x Luigi Bosca Tinto", category: "promociones-navidenas", price: 19000, img: "2x_luigi_malbec.png" },
-            { id: 951, name: "2x Trumpeter", category: "promociones-navidenas", price: 15000, img: "2x_trumpeter.png" },
-            { id: 952, name: "2x Estancia Mendoza", category: "promociones-navidenas", price: 5000, img: "2x_estancia.png" },
+            // --- VINOS (Botellas sueltas con lógica de promo) ---
+            { id: 401, name: "Santa Julia Chenin Dulce", category: "vinos", price: 6500, promoPrice: 12500, promoQty: 2, img: "santajulia_blanco.png" },
+            { id: 402, name: "Canciller Dulce 1125ml", category: "vinos", price: 3000, promoPrice: 5000, promoQty: 2, img: "canciller.png" },
+            { id: 403, name: "Dilema Blanco", category: "vinos", price: 3800, promoPrice: 7000, promoQty: 2, img: "dilema.png" },
+            { id: 404, name: "Prófugo Blanco", category: "vinos", price: 4500, promoPrice: 8000, promoQty: 2, img: "profugo_blanco.png" },
+            { id: 405, name: "Luigi Bosca Chardonnay", category: "vinos", price: 10000, promoPrice: 19000, promoQty: 2, img: "luigi_chardonnay.png" },
+            { id: 406, name: "Santa Julia Varietal Tinto", category: "vinos", price: 4000, img: "santajulia_tinto.png" },
+            { id: 407, name: "Santa Julia Tinto Dulce", category: "vinos", price: 6500, promoPrice: 12000, promoQty: 2, img: "santajulia_dulce.png" },
+            { id: 408, name: "Prófugo Tinto", category: "vinos", price: 3300, promoPrice: 6000, promoQty: 2, img: "profugo_tinto.png" },
+            { id: 409, name: "Cordero Piel de Lobo", category: "vinos", price: 4500, promoPrice: 8500, promoQty: 2, img: "cordero.png" },
+            { id: 410, name: "Alma Mora", category: "vinos", price: 4700, promoPrice: 25000, promoQty: 6, img: "almamora.png" }, 
+            { id: 411, name: "Otro Loco Más", category: "vinos", price: 3800, promoPrice: 7000, promoQty: 2, img: "otrolocomas.png" },
+            { id: 412, name: "Luigi Bosca Malbec", category: "vinos", price: 10000, promoPrice: 19000, promoQty: 2, img: "luigi_malbec.png" },
+            { id: 413, name: "Trumpeter", category: "vinos", price: 8000, promoPrice: 15000, promoQty: 2, img: "trumpeter.png" },
+            { id: 414, name: "Estancia Mendoza", category: "vinos", price: 3000, promoPrice: 5000, promoQty: 2, img: "estancia.png" },
+            { id: 415, name: "Vino Toro 750ml", category: "vinos", price: 2000, img: "toro750.png" },
+            { id: 4, name: "Vino Malbec Rutini", category: "vinos", price: 12500, img: "rutini.png" },
 
-            // --- COMBOS FERNET (MOVIDOS A CATEGORIA FERNET) ---
+            // --- COMBOS FERNET ---
             { id: 930, name: "Fernet 750ml + 2 Coca 2.5L", category: "fernet", price: 21500, img: "fernet750_2coca25.png" },
             { id: 931, name: "Fernet 750ml + 2 Coca 1.75L", category: "fernet", price: 20500, img: "fernet750_2coca175.png" },
             { id: 932, name: "Fernet 750ml + 1 Coca 2.5L", category: "fernet", price: 18000, img: "fernet750_1coca25.png" },
@@ -544,7 +549,7 @@
             { id: 934, name: "Fernet 1L + 2 Coca 1.75L", category: "fernet", price: 24500, img: "fernet1l_2coca175.png" },
             { id: 935, name: "Fernet 1L + 2 Coca 1.5L", category: "fernet", price: 24500, img: "fernet1l_2coca15.png" },
 
-            // --- GINS (NUEVA CATEGORIA) ---
+            // --- GINS ---
             { id: 501, name: "Beefeater Pink 700ml", category: "gins", price: 25500, img: "beefeater_pink.png" },
             { id: 502, name: "Beefeater Orange 700ml", category: "gins", price: 25500, img: "beefeater_orange.png" },
             { id: 503, name: "Beefeater 700ml", category: "gins", price: 21300, img: "beefeater_700.png" },
@@ -555,29 +560,29 @@
             { id: 508, name: "Gordon's", category: "gins", price: 11700, img: "gordons.png" },
             { id: 509, name: "Mitos", category: "gins", price: 9800, img: "mitos.png" },
 
-            // --- APERITIVOS (NUEVA CATEGORIA) ---
+            // --- APERITIVOS ---
             { id: 450, name: "Martini Rosso", category: "aperitivos", price: 7000, img: "martini_rosso.png" },
             { id: 451, name: "Cynar", category: "aperitivos", price: 9000, img: "cynar.png" },
             { id: 452, name: "Gancia", category: "aperitivos", price: 7000, img: "gancia.png" },
             { id: 453, name: "Cinzano", category: "aperitivos", price: 7800, img: "cinzano.png" },
             { id: 454, name: "Campari", category: "aperitivos", price: 8000, img: "campari.png" },
 
-            // --- LICORES (NUEVA CATEGORIA) ---
+            // --- LICORES ---
             { id: 601, name: "Jägermeister", category: "licores", price: 27500, img: "jaggermeister.png" },
             { id: 602, name: "Krautermeister", category: "licores", price: 17000, img: "krautermeister.png" },
             { id: 603, name: "Hodlmoser", category: "licores", price: 22800, img: "hodlmoser.png" },
             { id: 604, name: "Baileys", category: "licores", price: 23500, img: "baileys.png" },
 
-            // --- WHISKY (NUEVA CATEGORIA) ---
+            // --- WHISKY ---
             { id: 701, name: "Johnnie Walker Red Label 1L", category: "whisky", price: 26500, img: "redlabel_1l.png" },
             { id: 702, name: "Johnnie Walker Red Label 700ml", category: "whisky", price: 23900, img: "redlabel_700.png" },
             { id: 703, name: "Johnnie Walker Black Label", category: "whisky", price: 44000, img: "blacklabel.png" },
 
-            // --- CHAMPAGNE (NUEVA CATEGORIA) ---
+            // --- CHAMPAGNE ---
             { id: 801, name: "Chandon Délice", category: "champagne", price: 16500, img: "chandon_delice.png" },
             { id: 802, name: "Caja Chandon Délice", category: "champagne", price: 96000, img: "chandon_delice_caja.png" },
 
-            // --- JUGOS Y ENERGIZANTES (NUEVA CATEGORIA) ---
+            // --- JUGOS Y ENERGIZANTES ---
             { id: 150, name: "Baggio 1L", category: "jugos-energizantes", price: 1700, img: "baggio_1l.png" },
             { id: 151, name: "Cepita 1L", category: "jugos-energizantes", price: 2000, img: "cepita_1l.png" },
             { id: 152, name: "Cepita 1.5L", category: "jugos-energizantes", price: 2600, img: "cepita_15.png" },
@@ -663,24 +668,6 @@
             { id: 235, name: "Santa Fe Pilsen 1 Litro", category: "cervezas", price: 3000, img: "sfepilsen1l.png" },
             { id: 3, name: "Cerveza Quilmes Pack x6", category: "cervezas", price: 8200, img: "quilmespack.png" },
 
-            // VINOS
-            { id: 4, name: "Vino Malbec Rutini", category: "vinos", price: 12500, img: "rutini.png" },
-            { id: 401, name: "Santa Julia Chenin Dulce", category: "vinos", price: 6500, img: "santajulia_blanco.png" },
-            { id: 402, name: "Canciller Dulce 1125ml", category: "vinos", price: 3000, img: "canciller.png" },
-            { id: 403, name: "Dilema Blanco", category: "vinos", price: 3800, img: "dilema.png" },
-            { id: 404, name: "Prófugo Blanco", category: "vinos", price: 4500, img: "profugo_blanco.png" },
-            { id: 405, name: "Luigi Bosca Chardonnay", category: "vinos", price: 10000, img: "luigi_chardonnay.png" },
-            { id: 406, name: "Santa Julia Varietal Tinto", category: "vinos", price: 4000, img: "santajulia_tinto.png" },
-            { id: 407, name: "Santa Julia Tinto Dulce", category: "vinos", price: 6500, img: "santajulia_dulce.png" },
-            { id: 408, name: "Prófugo Tinto", category: "vinos", price: 3300, img: "profugo_tinto.png" },
-            { id: 409, name: "Cordero Piel de Lobo", category: "vinos", price: 4500, img: "cordero.png" },
-            { id: 410, name: "Alma Mora", category: "vinos", price: 4700, img: "almamora.png" },
-            { id: 411, name: "Otro Loco Más", category: "vinos", price: 3800, img: "otrolocomas.png" },
-            { id: 412, name: "Luigi Bosca Malbec", category: "vinos", price: 10000, img: "luigi_malbec.png" },
-            { id: 413, name: "Trumpeter", category: "vinos", price: 8000, img: "trumpeter.png" },
-            { id: 414, name: "Estancia Mendoza", category: "vinos", price: 3000, img: "estancia.png" },
-            { id: 415, name: "Vino Toro 750ml", category: "vinos", price: 2000, img: "toro750.png" },
-
             // PRODUCTOS VARIOS
             { id: 1001, name: "Bolsa de Hielo 2kg", category: "varios", price: 3000, img: "hielo2kg.png" },
             { id: 1002, name: "Bolsa de Hielo 4kg", category: "varios", price: 4500, img: "hielo4kg.png" },
@@ -758,7 +745,7 @@
             return array;
         }
 
-        // TIENDA CON MEZCLA EN 'TODOS' Y 'PROMOS'
+        // TIENDA CON MEZCLA
         function renderShop(filter, btn) {
             const container = document.getElementById('products-container');
             container.innerHTML = '';
@@ -775,11 +762,11 @@
             let list = [];
             
             if (filter === 'todos') {
-                list = [...products]; // Copia de todos los productos
-                shuffleArray(list);   // Los mezclamos
+                list = [...products]; 
+                shuffleArray(list);   
             } else if (filter === 'promociones-navidenas') {
                 list = products.filter(p => p.category === filter);
-                shuffleArray(list);   // Mezclamos las promos también
+                shuffleArray(list);   
             } else {
                 list = products.filter(p => p.category === filter);
             }
@@ -787,67 +774,50 @@
             list.forEach(p => {
                 const card = document.createElement('div');
                 card.className = 'product-card';
+                
+                // Generar etiqueta promo si aplica
+                let promoBadge = '';
+                if(p.promoQty) {
+                    promoBadge = `<span class="promo-badge">2x $${p.promoPrice}</span>`;
+                }
+
                 card.innerHTML = `
                     <img src="${RUTA_IMG}${p.img}" class="product-img" onclick="openProductDetail(${p.id})" onerror="this.src='https://via.placeholder.com/200?text=IMG'">
                     <div class="product-info">
                         <div class="product-name" onclick="openProductDetail(${p.id})">${p.name}</div>
-                        <span class="price">$${p.price}</span>
+                        <span class="price">$${p.price} ${promoBadge}</span>
                         <button class="add-cart-btn" onclick="addToCart(${p.id})">AGREGAR</button>
                     </div>`;
                 container.appendChild(card);
             });
         }
 
-        // DETALLE DE PRODUCTO
+        // DETALLE DE PRODUCTO (MODAL)
         function openProductDetail(id) {
             const p = products.find(i => i.id === id);
             if(!p) return;
 
-            // 1. Renderizar Info Principal
-            const detailContainer = document.getElementById('detail-content');
-            detailContainer.innerHTML = `
-                <div class="detail-img-container">
-                    <img src="${RUTA_IMG}${p.img}" class="detail-img" onerror="this.src='https://via.placeholder.com/300?text=IMG'">
-                </div>
-                <div class="detail-info">
-                    <h2 class="detail-title serif-font">${p.name}</h2>
-                    <span class="detail-price">$${p.price}</span>
-                    <p class="detail-desc">Disfruta de la mejor calidad con ${p.name}. Ideal para compartir en tus reuniones o disfrutar en casa. Disponible para entrega inmediata.</p>
-                    <button class="detail-add-btn" onclick="addToCart(${p.id}); showCart()">AGREGAR AL CARRITO</button>
-                </div>
-            `;
-
-            // 2. Renderizar Relacionados (Misma categoría, excluyendo el actual)
-            const relatedContainer = document.getElementById('related-products-container');
-            relatedContainer.innerHTML = '';
+            document.getElementById('popup-img').src = `${RUTA_IMG}${p.img}`;
+            document.getElementById('popup-title').innerText = p.name;
+            document.getElementById('popup-price').innerText = `$${p.price}`;
             
-            let related = products.filter(x => x.category === p.category && x.id !== p.id);
-            if(related.length < 3) {
-                 const others = products.filter(x => x.category !== p.category);
-                 related = related.concat(others).slice(0, 6); // Max 6 items
-            } else {
-                related = related.slice(0, 6);
+            let desc = `Disfruta de la mejor calidad con ${p.name}.`;
+            if(p.promoQty) {
+                desc += ` <br><br>🔥 <strong>OFERTA: Llevando ${p.promoQty} o más pagas $${p.promoPrice} c/pack</strong>`;
             }
+            document.getElementById('popup-desc').innerHTML = desc;
+            
+            // Configurar botón agregar
+            const btn = document.getElementById('popup-add-btn');
+            btn.onclick = () => {
+                addToCart(p.id);
+                closeModal('product-popup');
+            };
 
-            related.forEach(r => {
-                const rCard = document.createElement('div');
-                rCard.className = 'related-card';
-                rCard.onclick = () => openProductDetail(r.id); 
-                rCard.innerHTML = `
-                    <img src="${RUTA_IMG}${r.img}" class="related-img" onerror="this.src='https://via.placeholder.com/100?text=IMG'">
-                    <div style="padding:5px;">
-                        <div style="font-size:0.7rem; color:white; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${r.name}</div>
-                        <div style="font-size:0.8rem; color:#ccc;">$${r.price}</div>
-                    </div>
-                `;
-                relatedContainer.appendChild(rCard);
-            });
-
-            switchView('product-detail-view');
-            clearInterval(timer);
+            document.getElementById('product-popup').style.display = 'flex';
         }
 
-        // CARRITO
+        // CARRITO (LÓGICA PRECIOS MAYORISTAS/PROMO)
         function addToCart(id) {
             const p = products.find(i => i.id === id);
             const exist = cart.find(i => i.id === id);
@@ -864,6 +834,17 @@
             document.getElementById('cart-count').innerText = count;
             updateFloatingButton();
         }
+        
+        function calculateItemTotal(item) {
+            // Lógica inteligente: Si tiene promoQty (ej: 2) y llevas 2 o mas...
+            if (item.promoQty && item.promoPrice && item.qty >= item.promoQty) {
+                const bundles = Math.floor(item.qty / item.promoQty); // Cuantos packs
+                const remainder = item.qty % item.promoQty; // Cuantos sueltos
+                return (bundles * item.promoPrice) + (remainder * item.price);
+            }
+            return item.price * item.qty;
+        }
+
         function renderCart() {
             const con = document.getElementById('cart-list-container');
             con.innerHTML = '';
@@ -874,15 +855,25 @@
                 return;
             }
             cart.forEach((item, idx) => {
-                total += item.price * item.qty;
+                const itemTotal = calculateItemTotal(item);
+                total += itemTotal;
+                
+                let priceText = `$${item.price} x ${item.qty}`;
+                if(item.promoQty && item.qty >= item.promoQty) {
+                    priceText += ` <span style="color:#25D366; font-size:0.7rem;">(Promo aplicada)</span>`;
+                }
+
                 con.innerHTML += `
                     <div class="cart-item">
                         <div style="display:flex; align-items:center; gap:10px;">
                             <img src="${RUTA_IMG}${item.img}" class="cart-item-img" onerror="this.src='https://via.placeholder.com/50'">
-                            <div><div style="font-weight:600; color:white;">${item.name}</div><div style="font-size:0.8rem; color:#aaa;">$${item.price} x ${item.qty}</div></div>
+                            <div>
+                                <div style="font-weight:600; color:white;">${item.name}</div>
+                                <div style="font-size:0.8rem; color:#aaa;">${priceText}</div>
+                            </div>
                         </div>
                         <div style="display:flex; align-items:center; gap:10px;">
-                            <div style="color:white; font-weight:600;">$${item.price*item.qty}</div>
+                            <div style="color:white; font-weight:600;">$${itemTotal}</div>
                             <button onclick="removeFromCart(${idx})" class="cart-remove-btn">×</button>
                         </div>
                     </div>`;
@@ -902,35 +893,63 @@
         }
         function openDeliveryModal() { document.getElementById('delivery-modal').style.display = 'flex'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+        
         function nextStepToPayment() {
             const opts = document.getElementsByName('delivery');
             for(let o of opts) if(o.checked) deliveryType = o.value;
             closeModal('delivery-modal');
             document.getElementById('payment-modal').style.display = 'flex';
         }
-        function toggleCashInput(show) { document.getElementById('cash-input-wrapper').style.display = show ? 'block' : 'none'; }
+
+        function toggleAddressField(show) {
+            document.getElementById('address-field-container').style.display = show ? 'block' : 'none';
+        }
+
+        function togglePaymentFields(method) {
+            document.getElementById('cash-input-wrapper').style.display = method === 'efectivo' ? 'block' : 'none';
+            document.getElementById('transfer-info-wrapper').style.display = method === 'transferencia' ? 'block' : 'none';
+        }
+
+        function copyAlias() {
+            navigator.clipboard.writeText("luto.bebidas");
+            const btn = document.querySelector('.copy-btn');
+            const originalText = btn.innerText;
+            btn.innerText = "¡COPIADO!";
+            setTimeout(() => btn.innerText = originalText, 2000);
+        }
         
         // CHECKOUT
         function finalizeOrder() {
+            const name = document.getElementById('customer-name').value;
+            if(!name) return alert("Por favor ingresa tu nombre");
+
             const opts = document.getElementsByName('payment');
             let pay = 'efectivo';
             for(let o of opts) if(o.checked) pay = o.value;
             
-            let total = cart.reduce((a, b) => a + (b.price * b.qty), 0);
-            let msg = `Hola *Luto Bebidas*, pedido:%0A`;
-            cart.forEach(i => msg += `- ${i.name} (${i.qty}): $${i.price*i.qty}%0A`);
+            let total = 0;
+            let msg = `Hola *Luto Bebidas*, soy ${name}. Pedido:%0A`;
+            
+            cart.forEach(i => {
+                const itemTotal = calculateItemTotal(i);
+                total += itemTotal;
+                msg += `- ${i.name} (${i.qty}): $${itemTotal}%0A`;
+            });
+            
             msg += `*TOTAL: $${total}*%0A`;
             msg += `Entrega: ${deliveryType === 'delivery' ? '🛵 Domicilio' : '🏪 Retiro'}`;
             
-            if(deliveryType === 'delivery') msg += `%0A(Datos):%0ANombre:%0ADirección:`;
-            else msg += `%0A(Datos):%0ANombre:`;
+            if(deliveryType === 'delivery') {
+                const address = document.getElementById('customer-address').value;
+                if(!address) return alert("Ingresa tu dirección para el envío");
+                msg += `%0ADirección: ${address}`;
+            }
 
             if(pay === 'efectivo') {
                 const amount = document.getElementById('cash-amount').value;
-                if(!amount) return alert("Ingresa con cuánto abonas");
-                msg += `%0A💵 Pago: Efectivo (Abona: $${amount})`;
+                msg += `%0A💵 Pago: Efectivo ${amount ? '(Abona con $'+amount+')' : ''}`;
             } else {
-                msg += `%0A📱 Pago: Transferencia (Solicito Alias)`;
+                msg += `%0A📱 Pago: Transferencia (Alias: luto.bebidas)`;
             }
 
             window.open(`https://wa.me/${phoneNumber}?text=${msg}`, '_blank');
