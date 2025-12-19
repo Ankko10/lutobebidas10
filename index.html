@@ -400,11 +400,17 @@
                 <button class="cat-btn active" onclick="renderShop('todos', this)">Todos</button>
                 <button class="cat-btn" onclick="renderShop('promociones-navidenas', this)">🔥 Promos</button>
                 <button class="cat-btn" onclick="renderShop('fernet', this)">Fernet</button>
+                <button class="cat-btn" onclick="renderShop('aperitivos', this)">Aperitivos</button>
+                <button class="cat-btn" onclick="renderShop('gins', this)">Gins</button>
+                <button class="cat-btn" onclick="renderShop('licores', this)">Licores</button>
+                <button class="cat-btn" onclick="renderShop('whisky', this)">Whisky</button>
+                <button class="cat-btn" onclick="renderShop('champagne', this)">Champagne</button>
                 <button class="cat-btn" onclick="renderShop('cervezas', this)">Cervezas</button>
                 <button class="cat-btn" onclick="renderShop('sidras', this)">Sidras</button>
                 <button class="cat-btn" onclick="renderShop('vodka', this)">Vodka</button>
                 <button class="cat-btn" onclick="renderShop('vinos', this)">Vinos</button>
                 <button class="cat-btn" onclick="renderShop('sin-alcohol', this)">Sin Alcohol</button>
+                <button class="cat-btn" onclick="renderShop('jugos-energizantes', this)">Jugos/Energizantes</button>
                 <button class="cat-btn" onclick="renderShop('varios', this)">Varios</button>
             </div>
             <div id="products-container" class="products-grid"></div>
@@ -494,13 +500,12 @@
 
         // DATOS
         const products = [
-            // --- NUEVOS COMBOS VINOS (AGREGADOS) ---
+            // --- NUEVOS COMBOS VINOS ---
             { id: 940, name: "2x Santa Julia Blanco 750ml", category: "promociones-navidenas", price: 12500, img: "2x_santajulia_blanco.png" },
             { id: 941, name: "2x Canciller Dulce 1125ml", category: "promociones-navidenas", price: 5000, img: "2x_canciller.png" },
             { id: 942, name: "2x Dilema Blanco", category: "promociones-navidenas", price: 7000, img: "2x_dilema.png" },
             { id: 943, name: "2x Prófugo Blanco", category: "promociones-navidenas", price: 8000, img: "2x_profugo_blanco.png" },
             { id: 944, name: "2x Luigi Bosca Chardonnay", category: "promociones-navidenas", price: 19000, img: "2x_luigi_chardonnay.png" },
-            
             { id: 945, name: "2x Santa Julia Tinto Dulce", category: "promociones-navidenas", price: 12000, img: "2x_santajulia_dulce.png" },
             { id: 946, name: "2x Prófugo Tinto", category: "promociones-navidenas", price: 6000, img: "2x_profugo_tinto.png" },
             { id: 947, name: "2x Cordero Piel de Lobo", category: "promociones-navidenas", price: 8500, img: "2x_cordero.png" },
@@ -510,13 +515,57 @@
             { id: 951, name: "2x Trumpeter", category: "promociones-navidenas", price: 15000, img: "2x_trumpeter.png" },
             { id: 952, name: "2x Estancia Mendoza", category: "promociones-navidenas", price: 5000, img: "2x_estancia.png" },
 
-            // --- COMBOS FERNET ---
-            { id: 930, name: "Fernet 750ml + 2 Coca 2.5L", category: "promociones-navidenas", price: 21500, img: "fernet750_2coca25.png" },
-            { id: 931, name: "Fernet 750ml + 2 Coca 1.75L", category: "promociones-navidenas", price: 20500, img: "fernet750_2coca175.png" },
-            { id: 932, name: "Fernet 750ml + 1 Coca 2.5L", category: "promociones-navidenas", price: 18000, img: "fernet750_1coca25.png" },
-            { id: 933, name: "Fernet 1L + 2 Coca 2.5L", category: "promociones-navidenas", price: 25500, img: "fernet1l_2coca25.png" },
-            { id: 934, name: "Fernet 1L + 2 Coca 1.75L", category: "promociones-navidenas", price: 24500, img: "fernet1l_2coca175.png" },
-            { id: 935, name: "Fernet 1L + 2 Coca 1.5L", category: "promociones-navidenas", price: 24500, img: "fernet1l_2coca15.png" },
+            // --- COMBOS FERNET (MOVIDOS A CATEGORIA FERNET) ---
+            { id: 930, name: "Fernet 750ml + 2 Coca 2.5L", category: "fernet", price: 21500, img: "fernet750_2coca25.png" },
+            { id: 931, name: "Fernet 750ml + 2 Coca 1.75L", category: "fernet", price: 20500, img: "fernet750_2coca175.png" },
+            { id: 932, name: "Fernet 750ml + 1 Coca 2.5L", category: "fernet", price: 18000, img: "fernet750_1coca25.png" },
+            { id: 933, name: "Fernet 1L + 2 Coca 2.5L", category: "fernet", price: 25500, img: "fernet1l_2coca25.png" },
+            { id: 934, name: "Fernet 1L + 2 Coca 1.75L", category: "fernet", price: 24500, img: "fernet1l_2coca175.png" },
+            { id: 935, name: "Fernet 1L + 2 Coca 1.5L", category: "fernet", price: 24500, img: "fernet1l_2coca15.png" },
+
+            // --- GINS (NUEVA CATEGORIA) ---
+            { id: 501, name: "Beefeater Pink 700ml", category: "gins", price: 25500, img: "beefeater_pink.png" },
+            { id: 502, name: "Beefeater Orange 700ml", category: "gins", price: 25500, img: "beefeater_orange.png" },
+            { id: 503, name: "Beefeater 700ml", category: "gins", price: 21300, img: "beefeater_700.png" },
+            { id: 504, name: "Heredero 700ml", category: "gins", price: 13000, img: "heredero_700.png" },
+            { id: 505, name: "Heredero Pink 700ml", category: "gins", price: 13900, img: "heredero_pink.png" },
+            { id: 506, name: "Bombay Sapphire 750ml", category: "gins", price: 26000, img: "bombay.png" },
+            { id: 507, name: "Tanqueray Dry", category: "gins", price: 23000, img: "tanqueray.png" },
+            { id: 508, name: "Gordon's", category: "gins", price: 11700, img: "gordons.png" },
+            { id: 509, name: "Mitos", category: "gins", price: 9800, img: "mitos.png" },
+
+            // --- APERITIVOS (NUEVA CATEGORIA) ---
+            { id: 450, name: "Martini Rosso", category: "aperitivos", price: 7000, img: "martini_rosso.png" },
+            { id: 451, name: "Cynar", category: "aperitivos", price: 9000, img: "cynar.png" },
+            { id: 452, name: "Gancia", category: "aperitivos", price: 7000, img: "gancia.png" },
+            { id: 453, name: "Cinzano", category: "aperitivos", price: 7800, img: "cinzano.png" },
+            { id: 454, name: "Campari", category: "aperitivos", price: 8000, img: "campari.png" },
+
+            // --- LICORES (NUEVA CATEGORIA) ---
+            { id: 601, name: "Jägermeister", category: "licores", price: 27500, img: "jaggermeister.png" },
+            { id: 602, name: "Krautermeister", category: "licores", price: 17000, img: "krautermeister.png" },
+            { id: 603, name: "Hodlmoser", category: "licores", price: 22800, img: "hodlmoser.png" },
+            { id: 604, name: "Baileys", category: "licores", price: 23500, img: "baileys.png" },
+
+            // --- WHISKY (NUEVA CATEGORIA) ---
+            { id: 701, name: "Johnnie Walker Red Label 1L", category: "whisky", price: 26500, img: "redlabel_1l.png" },
+            { id: 702, name: "Johnnie Walker Red Label 700ml", category: "whisky", price: 23900, img: "redlabel_700.png" },
+            { id: 703, name: "Johnnie Walker Black Label", category: "whisky", price: 44000, img: "blacklabel.png" },
+
+            // --- CHAMPAGNE (NUEVA CATEGORIA) ---
+            { id: 801, name: "Chandon Délice", category: "champagne", price: 16500, img: "chandon_delice.png" },
+            { id: 802, name: "Caja Chandon Délice", category: "champagne", price: 96000, img: "chandon_delice_caja.png" },
+
+            // --- JUGOS Y ENERGIZANTES (NUEVA CATEGORIA) ---
+            { id: 150, name: "Baggio 1L", category: "jugos-energizantes", price: 1700, img: "baggio_1l.png" },
+            { id: 151, name: "Cepita 1L", category: "jugos-energizantes", price: 2000, img: "cepita_1l.png" },
+            { id: 152, name: "Cepita 1.5L", category: "jugos-energizantes", price: 2600, img: "cepita_15.png" },
+            { id: 153, name: "Fresh Saborizada", category: "jugos-energizantes", price: 1500, img: "fresh.png" },
+            { id: 154, name: "Pack Fresh", category: "jugos-energizantes", price: 7500, img: "fresh_pack.png" },
+            { id: 155, name: "Monster Energy", category: "jugos-energizantes", price: 2700, img: "monster.png" },
+            { id: 156, name: "Speed XL", category: "jugos-energizantes", price: 2200, img: "speed_xl.png" },
+            { id: 157, name: "Speed 250ml", category: "jugos-energizantes", price: 1700, img: "speed_250.png" },
+            { id: 158, name: "Red Bull 250ml", category: "jugos-energizantes", price: 2500, img: "redbull.png" },
 
             // --- COMBOS HEREDERO ---
             { id: 920, name: "Gin Heredero Pink + 2 Tónicas 1.5L", category: "promociones-navidenas", price: 17500, img: "heredero_pink_simple.png" },
@@ -524,7 +573,7 @@
             { id: 922, name: "Combo Heredero Pink Completo", category: "promociones-navidenas", price: 25500, img: "heredero_pink_full.png" },
             { id: 923, name: "Combo Heredero Tangerine Completo", category: "promociones-navidenas", price: 24500, img: "heredero_tangerine_full.png" },
 
-            // SIDRAS (Categoría actualizada)
+            // SIDRAS
             { id: 901, name: "Sidra 1888 750ml", category: "sidras", price: 6500, img: "1888.png" },
             { id: 902, name: "Sidra 1888 Rosé 750ml", category: "sidras", price: 7700, img: "1888rose.png" },
             { id: 903, name: "Sidra Tunuyán 750ml", category: "sidras", price: 3000, img: "tunuyan.png" },
@@ -553,7 +602,7 @@
             { id: 307, name: "Skyy Cosmic", category: "vodka", price: 9500, img: "skyycosmic.png" },
             { id: 308, name: "Sernova Vodka Saborizado", category: "vodka", price: 7700, img: "sernovasabor.png" },
             
-            // SIN ALCOHOL
+            // SIN ALCOHOL (GASEOSAS)
             { id: 101, name: "Coca-Cola 1.5L", category: "sin-alcohol", price: 3000, img: "coca15.png" },
             { id: 102, name: "Coca-Cola 1.75L", category: "sin-alcohol", price: 3300, img: "coca175.png" },
             { id: 103, name: "Coca-Cola 2.5L", category: "sin-alcohol", price: 3500, img: "coca25.png" },
@@ -593,7 +642,7 @@
             { id: 235, name: "Santa Fe Pilsen 1 Litro", category: "cervezas", price: 3000, img: "sfepilsen1l.png" },
             { id: 3, name: "Cerveza Quilmes Pack x6", category: "cervezas", price: 8200, img: "quilmespack.png" },
 
-            // VINOS (Nuevas Botellas Sueltas)
+            // VINOS
             { id: 4, name: "Vino Malbec Rutini", category: "vinos", price: 12500, img: "rutini.png" },
             { id: 401, name: "Santa Julia Chenin Dulce", category: "vinos", price: 6500, img: "santajulia_blanco.png" },
             { id: 402, name: "Canciller Dulce 1125ml", category: "vinos", price: 3000, img: "canciller.png" },
@@ -611,7 +660,7 @@
             { id: 414, name: "Estancia Mendoza", category: "vinos", price: 3000, img: "estancia.png" },
             { id: 415, name: "Vino Toro 750ml", category: "vinos", price: 2000, img: "toro750.png" },
 
-            // PRODUCTOS VARIOS (Agregados anteriormente)
+            // PRODUCTOS VARIOS
             { id: 1001, name: "Bolsa de Hielo 2kg", category: "varios", price: 3000, img: "hielo2kg.png" },
             { id: 1002, name: "Bolsa de Hielo 4kg", category: "varios", price: 4500, img: "hielo4kg.png" },
             { id: 1003, name: "Bolsa de Frutos Rojos", category: "varios", price: 4000, img: "frutosrojos.png" }
