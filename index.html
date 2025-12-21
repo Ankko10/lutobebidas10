@@ -496,10 +496,6 @@
                 <label onclick="togglePaymentFields('efectivo')" class="modal-option-label">
                     <input type="radio" name="payment" value="efectivo" checked> 💵 Efectivo
                 </label>
-                <div id="cash-input-wrapper" style="margin-left: 15px; margin-bottom: 10px;">
-                    <input type="number" id="cash-amount" placeholder="¿Con cuánto abonas?" class="form-input">
-                </div>
-                
                 <label onclick="togglePaymentFields('transferencia')" class="modal-option-label">
                     <input type="radio" name="payment" value="transferencia"> 📱 Transferencia
                 </label>
@@ -595,7 +591,7 @@
             { id: 156, name: "Speed XL", category: "jugos-energizantes", price: 2200, img: "speed_xl.png" },
             { id: 157, name: "Speed 250ml", category: "jugos-energizantes", price: 1700, img: "speed_250.png" },
             { id: 158, name: "Red Bull 250ml", category: "jugos-energizantes", price: 2500, img: "redbull.png" },
-            { id: 161, name: "Paso de los Toros Tónica 1.5L", category: "jugos-energizantes", price: 2400, img: "pasotonica15.png" },
+            { id: 160, name: "Tónica Cunnington 1.5L", category: "jugos-energizantes", price: 1900, img: "cunnington.png" },
             { id: 162, name: "Pritty Limón 2L", category: "jugos-energizantes", price: 2000, img: "pritty.png" },
             { id: 163, name: "7up 2.25L", category: "jugos-energizantes", price: 2600, img: "7up225.png" },
             { id: 164, name: "Pepsi 3L", category: "jugos-energizantes", price: 3000, img: "pepsi3l.png" },
@@ -603,7 +599,7 @@
             // SIN ALCOHOL (GASEOSAS EXISTENTES)
             { id: 101, name: "Coca-Cola 1.5L", category: "sin-alcohol", price: 3000, img: "coca15.png" },
             { id: 102, name: "Coca-Cola 1.75L", category: "sin-alcohol", price: 3300, img: "coca175.png" },
-            { id: 103, name: "Coca-Cola 2.5L", category: "sin-alcohol", price: 3700, img: "coca25.png" },
+            { id: 103, name: "Coca-Cola 2.5L", category: "sin-alcohol", price: 3500, img: "coca25.png" },
             { id: 104, name: "Coca-Cola 2.75L", category: "sin-alcohol", price: 3900, img: "coca275.png" },
             { id: 105, name: "Coca Retornable 2L", category: "sin-alcohol", price: 3000, img: "cocaret2l.png" },
             { id: 106, name: "Sprite 1.5L", category: "sin-alcohol", price: 3000, img: "sprite15.png" },
@@ -949,9 +945,7 @@
         }
 
         function togglePaymentFields(method) {
-            const cash = document.getElementById('cash-input-wrapper');
             const trans = document.getElementById('transfer-info-wrapper');
-            if(cash) cash.style.display = method === 'efectivo' ? 'block' : 'none';
             if(trans) trans.style.display = method === 'transferencia' ? 'block' : 'none';
         }
 
@@ -995,9 +989,7 @@
             }
 
             if(pay === 'efectivo') {
-                const cashEl = document.getElementById('cash-amount');
-                const amount = cashEl ? cashEl.value : '';
-                msg += `%0A💵 Pago: Efectivo ${amount ? '(Abona con $'+amount+')' : ''}`;
+                msg += `%0A💵 Pago: Efectivo`;
             } else {
                 msg += `%0A📱 Pago: Transferencia (Alias: luto.bebidas)`;
             }
