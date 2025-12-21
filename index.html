@@ -37,7 +37,7 @@
         h1, h2, h3, .serif-font { font-family: 'Playfair Display', serif; }
         button { font-family: 'Montserrat', sans-serif; }
 
-        /* --- NOVEDAD: ANIMACIÓN DE LUCES CAYENDO --- */
+        /* --- ANIMACIÓN DE LUCES CAYENDO (FONDO CATÁLOGO) --- */
         @keyframes falling-lights {
           to { background-position: 0px 800px, 0px 600px, 0px 400px; }
         }
@@ -52,25 +52,30 @@
             display: flex; justify-content: space-between; align-items: center;
         }
         
-        /* --- NOVEDAD: GORRITO NAVIDEÑO EN EL LOGO (Truco CSS) --- */
-        .brand-container { 
-            display: flex; align-items: center; gap: 10px; cursor: pointer;
-            position: relative; /* Necesario para el truco */
-        }
-        /* Esto añade el emoji del gorrito encima */
-        .brand-container::after {
-            content: '🎅'; /* Emoji de Santa */
-            position: absolute;
-            top: -7px;
-            left: -6px;
-            font-size: 1.2rem;
-            transform: rotate(-15deg);
-            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.5));
-            z-index: 1005;
-            pointer-events: none;
-        }
+        .brand-container { display: flex; align-items: center; gap: 10px; cursor: pointer; }
 
-        .logo-img { height: 35px; width: 35px; object-fit: cover; border-radius: 50%; border: 1px solid var(--primary-white); }
+        /* --- NUEVO: ESTILOS PARA EL GORRITO REAL SOBRE EL LOGO --- */
+        .logo-wrapper {
+            position: relative; /* Necesario para que el gorro se posicione respecto a esto */
+            width: 35px; height: 35px;
+        }
+        .logo-img { 
+            width: 100%; height: 100%; 
+            object-fit: cover; border-radius: 50%; 
+            border: 1px solid var(--primary-white);
+            position: relative; z-index: 1; /* El logo queda abajo */
+        }
+        .santa-hat-img {
+            position: absolute; /* Posición absoluta respecto al wrapper */
+            top: -14px;  /* Ajusta esto para subir/bajar el gorro */
+            left: -11px; /* Ajusta esto para moverlo izquierda/derecha */
+            width: 38px; /* Tamaño del gorro */
+            height: auto;
+            z-index: 5; /* Encima del logo */
+            transform: rotate(-12deg); /* Inclinación */
+            pointer-events: none; /* Para que no interfiera con el click en el logo */
+            filter: drop-shadow(1px 2px 2px rgba(0,0,0,0.6)); /* Sombra para realismo */
+        }
         
         .brand-text { display: flex; align-items: baseline; gap: 3px; }
         .brand-main { font-size: 1.1rem; color: var(--primary-white); letter-spacing: 1px; text-transform: uppercase; font-weight: 700; }
@@ -196,20 +201,22 @@
             min-height: 80vh;
             /* Color base negro */
             background-color: var(--dark-bg-main);
-            /* Capas de "luces" con muy baja opacidad (0.12, 0.08, 0.05) para que sea sutil */
+            /* Capas de "luces" con muy baja opacidad para que sea sutil */
             background-image:
-                radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,0.12) 50%, transparent 50%),
-                radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.08) 50%, transparent 50%),
-                radial-gradient(3px 3px at 90px 40px, rgba(255,255,255,0.05) 50%, transparent 50%),
-                radial-gradient(2px 2px at 150px 200px, rgba(255,255,255,0.1) 50%, transparent 50%);
-            background-size: 300px 800px, 400px 600px, 250px 400px, 350px 500px;
-            animation: falling-lights 40s linear infinite;
+                radial-gradient(rgba(255,255,255,0.15) 1px, transparent 3px),
+                radial-gradient(rgba(255,255,255,0.1) 1px, transparent 2px),
+                radial-gradient(rgba(255,255,255,0.08) 2px, transparent 4px);
+            background-size: 350px 350px, 250px 250px, 450px 450px;
+            background-position: 0 0, 0 0, 0 0;
+            /* Animación lenta de caída */
+            animation: falling-lights 25s linear infinite;
         }
 
         .categories-nav { 
             display: flex; gap: 8px; overflow-x: auto; padding: 10px 15px; 
             background: var(--dark-bg-secondary); margin-bottom: 15px; 
             border-bottom: 1px solid var(--border-subtle); scrollbar-width: none; 
+            position: relative; z-index: 2; /* Para que las luces pasen por detrás */
         }
         .categories-nav::-webkit-scrollbar { display: none; }
         .cat-btn { 
@@ -219,7 +226,7 @@
         }
         .cat-btn.active { background: var(--primary-white); color: var(--dark-bg-main); border-color: var(--primary-white); }
         
-        .products-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 0 12px 100px 12px; }
+        .products-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 0 12px 100px 12px; position: relative; z-index: 2; }
         
         /* TARJETAS CON ZOOM Y NEON */
         .product-card { 
@@ -231,7 +238,7 @@
             padding-bottom: 12px; 
             cursor: pointer; 
             transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-            /* Aseguramos que la tarjeta sea opaca sobre el fondo de luces */
+            /* Aseguramos que la tarjeta sea opaca y tape las luces */
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
         .product-card:hover {
@@ -345,7 +352,10 @@
 
     <header>
         <div class="brand-container" onclick="toggleSidebar()">
-            <img src="img/logo-luto.png" alt="Luto" class="logo-img" onerror="this.src='https://via.placeholder.com/50/333/fff?text=L'">
+            <div class="logo-wrapper">
+                <img src="https://i.imgur.com/4307K5s.png" alt="Gorro Navidad" class="santa-hat-img">
+                <img src="img/logo-luto.png" alt="Luto" class="logo-img" onerror="this.src='https://via.placeholder.com/50/333/fff?text=L'">
+            </div>
             <div class="brand-text">
                 <span class="brand-main">LUTO</span>
                 <span class="brand-tm">ONLINE</span>
@@ -535,6 +545,7 @@
                 <label onclick="togglePaymentFields('efectivo')" class="modal-option-label">
                     <input type="radio" name="payment" value="efectivo" checked> 💵 Efectivo
                 </label>
+                
                 <label onclick="togglePaymentFields('transferencia')" class="modal-option-label">
                     <input type="radio" name="payment" value="transferencia"> 📱 Transferencia
                 </label>
