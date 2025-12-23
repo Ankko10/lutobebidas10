@@ -61,7 +61,7 @@
         
         .brand-container { display: flex; align-items: center; gap: 10px; cursor: pointer; }
 
-        /* --- ESTILOS GORRITO (CORREGIDO: POSICIÓN DERECHA + INCLINACIÓN RECUPERADA) --- */
+        /* --- ESTILOS GORRITO --- */
         .logo-wrapper {
             position: relative; 
             width: 35px; height: 35px;
@@ -74,13 +74,12 @@
         }
         .santa-hat-img {
             position: absolute;
-            /* Combinación de posición a la derecha e inclinación */
-            top: -23px;   
-            left: 0px;    
+            top: -20px;   
+            left: 3px;    
             width: 55px;  
             height: auto;
             z-index: 5; 
-            transform: rotate(15deg); /* ¡INCLINACIÓN RECUPERADA! */
+            transform: rotate(15deg); 
             pointer-events: none; 
             filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.8)); 
         }
@@ -205,7 +204,7 @@
         /* VISTA TIENDA - FONDO BRILLANTE */
         #shop-view { 
             display: none; 
-            padding-top: 15px; 
+            padding-top: 20px; 
             min-height: 80vh;
             background-color: var(--dark-bg-main);
             /* LUCES BRILLANTES */
@@ -216,6 +215,40 @@
             background-size: 550px 550px, 350px 350px, 250px 250px;
             background-position: 0 0, 0 0, 0 0;
             animation: falling-lights 20s linear infinite;
+        }
+
+        /* --- NUEVO: ESTILOS BARRA DE BÚSQUEDA --- */
+        .search-wrapper {
+            max-width: 600px;
+            margin: 0 auto 20px auto;
+            position: relative;
+            padding: 0 15px;
+            z-index: 10;
+        }
+        .search-input {
+            width: 100%;
+            padding: 12px 15px 12px 45px;
+            background: var(--dark-bg-secondary);
+            border: 1px solid var(--border-subtle);
+            border-radius: 30px;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.95rem;
+            outline: none;
+            transition: all 0.3s;
+        }
+        .search-input:focus {
+            border-color: var(--primary-white);
+            box-shadow: 0 0 15px rgba(255,255,255,0.15);
+            background: #222;
+        }
+        .search-icon {
+            position: absolute;
+            left: 32px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #777;
+            font-size: 1rem;
         }
 
         .categories-nav { 
@@ -245,8 +278,8 @@
             cursor: pointer; 
             transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            opacity: 0; /* Empieza invisible para la animación */
-            animation: fadeSlideUp 0.5s ease forwards; /* APLICAR LA ANIMACIÓN */
+            opacity: 0; 
+            animation: fadeSlideUp 0.5s ease forwards;
         }
         .product-card:hover {
             transform: scale(1.02);
@@ -459,6 +492,11 @@
 
     <div id="shop-view">
         <div class="container" style="max-width: 1200px; margin: 0 auto;">
+             <div class="search-wrapper">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" id="search-input" class="search-input" placeholder="Buscar bebidas..." onkeyup="handleSearch()">
+             </div>
+
              <h2 class="serif-font" style="text-align:center; margin-bottom:20px; color: var(--primary-white); font-size:1.8rem; letter-spacing: 1px;">Catálogo</h2>
             <div class="categories-nav">
                 <button class="cat-btn active" onclick="renderShop('todos', this)">Todos</button>
@@ -649,6 +687,7 @@
             { id: 157, name: "Speed 250ml", category: "jugos-energizantes", price: 1700, img: "speed_250.png" },
             { id: 158, name: "Red Bull 250ml", category: "jugos-energizantes", price: 2500, img: "redbull.png" },
             { id: 160, name: "Tónica Cunnington 1.5L", category: "jugos-energizantes", price: 1900, img: "cunnington.png" },
+            { id: 161, name: "Paso de los Toros Tónica 1.5L", category: "jugos-energizantes", price: 2400, img: "pasotonica15.png" },
             { id: 162, name: "Pritty Limón 2L", category: "jugos-energizantes", price: 2000, img: "pritty.png" },
             { id: 163, name: "7up 2.25L", category: "jugos-energizantes", price: 2600, img: "7up225.png" },
             { id: 164, name: "Pepsi 3L", category: "jugos-energizantes", price: 3000, img: "pepsi3l.png" },
@@ -664,7 +703,7 @@
             { id: 108, name: "Sprite Zero 1.75L", category: "sin-alcohol", price: 3000, img: "spritezero175.png" },
             { id: 109, name: "7up 1.5L", category: "sin-alcohol", price: 2000, img: "7up15.png" },
             { id: 110, name: "Pepsi 1.5L", category: "sin-alcohol", price: 2000, img: "pepsi15.png" },
-            { id: 111, name: "Manaos Pomelo 3L", category: "sin-alcohol", price: 3000, img: "manaos3l.png" },
+            { id: 111, name: "Manaos Pomelo 3L", category: "sin-alcohol", price: 0, img: "manaos3l.png" },
             { id: 112, name: "Paso de los Toros Pomelo", category: "sin-alcohol", price: 2400, img: "pasopomelo.png" },
             { id: 113, name: "Paso de los Toros Tónica", category: "sin-alcohol", price: 2400, img: "pasotonica.png" },
 
@@ -710,7 +749,7 @@
             { id: 204, name: "Santa Fe Pack x6 (Lata)", category: "cervezas", price: 9500, img: "sfepack.png" },
             { id: 205, name: "Santa Fe Pilsen Lata", category: "cervezas", price: 1900, img: "sfepilsenlata.png" },
             { id: 206, name: "Santa Fe Pilsen Pack x6", category: "cervezas", price: 11000, img: "sfepilsenpack.png" },
-            { id: 207, name: "Brahma Pack x6 (Lata)", category: "cervezas", price: 12000, img: "brahmapack.png" },
+            { id: 207, name: "Brahma Pack x6 (Lata)", category: "cervezas", price: 0, img: "brahmapack.png" },
             { id: 208, name: "Heineken Lata 473ml", category: "cervezas", price: 2500, img: "heinekenlata.png" },
             { id: 209, name: "Heineken Pack x6 (Lata)", category: "cervezas", price: 14500, img: "heinekenpack.png" },
             { id: 210, name: "Miller Lata 473ml", category: "cervezas", price: 2200, img: "millerlata.png" },
@@ -718,12 +757,12 @@
             { id: 212, name: "Stella Artois Pack x6", category: "cervezas", price: 0, img: "stellapack.png" },
             { id: 220, name: "Corona Porrón 330ml", category: "cervezas", price: 2400, img: "coronapinina.png" },
             { id: 221, name: "Corona Pack x6 (330ml)", category: "cervezas", price: 14000, img: "coronapack.png" },
-            { id: 222, name: "Stella Artois Pack x6 (Pinina)", category: "cervezas", price: 2300, img: "stellapininapack.png" },
+            { id: 222, name: "Stella Artois Pack x6 (Pinina)", category: "cervezas", price: 0, img: "stellapininapack.png" },
             { id: 223, name: "Miller Pack x6 (Pinina)", category: "cervezas", price: 0, img: "millerpininapack.png" },
-            { id: 230, name: "Budweiser 1 Litro", category: "cervezas", price: 2800, img: "bud1l.png" },
-            { id: 231, name: "Corona 750ml", category: "cervezas", price: 2300, img: "corona750.png" },
+            { id: 230, name: "Budweiser 1 Litro", category: "cervezas", price: 0, img: "bud1l.png" },
+            { id: 231, name: "Corona 750ml", category: "cervezas", price: 0, img: "corona750.png" },
             { id: 232, name: "Miller 1 Litro", category: "cervezas", price: 3000, img: "miller1l.png" },
-            { id: 233, name: "Bajo Cero 1 Litro", category: "cervezas", price: 2700, img: "bajocero1l.png" },
+            { id: 233, name: "Bajo Cero 1 Litro", category: "cervezas", price: 0, img: "bajocero1l.png" },
             { id: 234, name: "Santa Fe 1 Litro", category: "cervezas", price: 2800, img: "sfe1l.png" },
             { id: 235, name: "Santa Fe Pilsen 1 Litro", category: "cervezas", price: 3000, img: "sfepilsen1l.png" },
             { id: 3, name: "Cerveza Quilmes Pack x6", category: "cervezas", price: 8200, img: "quilmespack.png" },
@@ -812,11 +851,17 @@
             return array;
         }
 
-        // TIENDA CON MEZCLA Y ANIMACIÓN ESCALONADA
+        // TIENDA CON MEZCLA Y BÚSQUEDA
         function renderShop(filter, btn) {
             const container = document.getElementById('products-container');
             if (!container) return;
             container.innerHTML = '';
+            
+            // Limpiar buscador si se cambia de categoría
+            const searchInput = document.getElementById('search-input');
+            if (searchInput && btn) { 
+                searchInput.value = ''; 
+            }
             
             if(btn) {
                 document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
@@ -828,6 +873,7 @@
             }
 
             let list = [];
+            // Copiamos el array para no modificar el original al filtrar
             if (filter === 'todos') {
                 list = products.slice(); 
                 shuffleArray(list);   
@@ -841,39 +887,79 @@
                 list = products.filter(p => p.category === filter);
             }
             
-            // MODIFICADO: Se añade 'index' para el retraso de la animación
             list.forEach((p, index) => {
-                const card = document.createElement('div');
-                card.className = 'product-card';
-                // APLICA EL RETRASO ESCALONADO
-                card.style.animationDelay = `${index * 0.05}s`;
-                
-                let promoBadge = '';
-                if(p.promoQty) {
-                    promoBadge = `<span class="promo-badge">${p.promoQty}x $${p.promoPrice}</span>`;
-                }
-
-                card.innerHTML = `
-                    <img src="${RUTA_IMG}${p.img}" class="product-img" onerror="this.src='https://via.placeholder.com/200?text=IMG'">
-                    <div class="product-info">
-                        <div class="product-name">${p.name}</div>
-                        <span class="price">$${p.price} ${promoBadge}</span>
-                        <button class="add-cart-btn">AGREGAR</button>
-                    </div>`;
-                
-                const imgEl = card.querySelector('.product-img');
-                const titleEl = card.querySelector('.product-name');
-                const btnEl = card.querySelector('.add-cart-btn');
-                
-                imgEl.onclick = () => openProductDetail(p.id);
-                titleEl.onclick = () => openProductDetail(p.id);
-                btnEl.onclick = (e) => {
-                    e.stopPropagation(); 
-                    addToCart(p.id);
-                };
-
-                container.appendChild(card);
+                createProductCard(p, index, container);
             });
+        }
+
+        // FUNCIÓN DE BÚSQUEDA GLOBAL
+        function handleSearch() {
+            const query = document.getElementById('search-input').value.toLowerCase();
+            const container = document.getElementById('products-container');
+            container.innerHTML = '';
+
+            // Si está vacío, volvemos a mostrar 'todos' (o la categoría activa si quisiéramos ser más complejos, 
+            // pero volver a 'todos' es un buen default para búsqueda global)
+            if(query.trim() === '') {
+                // Quitamos selección de botones para indicar modo "todos/busqueda"
+                document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+                // Opcional: Volver a activar "Todos"
+                const allBtn = document.querySelector('.cat-btn'); 
+                if(allBtn) allBtn.classList.add('active');
+                
+                // Renderizar todos mezclados
+                let list = products.slice();
+                shuffleArray(list);
+                list.forEach((p, index) => createProductCard(p, index, container));
+                return;
+            }
+
+            // Desactivar botones de categoría porque estamos buscando en TODO
+            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+
+            const results = products.filter(p => p.name.toLowerCase().includes(query));
+
+            if(results.length === 0) {
+                container.innerHTML = '<p style="text-align:center; color:#999; grid-column: 1 / -1; padding:20px;">No encontramos bebidas con ese nombre 😢</p>';
+                return;
+            }
+
+            results.forEach((p, index) => {
+                createProductCard(p, index, container);
+            });
+        }
+
+        // Helper para crear tarjetas (reutilizable)
+        function createProductCard(p, index, container) {
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            card.style.animationDelay = `${index * 0.05}s`;
+            
+            let promoBadge = '';
+            if(p.promoQty) {
+                promoBadge = `<span class="promo-badge">${p.promoQty}x $${p.promoPrice}</span>`;
+            }
+
+            card.innerHTML = `
+                <img src="${RUTA_IMG}${p.img}" class="product-img" onerror="this.src='https://via.placeholder.com/200?text=IMG'">
+                <div class="product-info">
+                    <div class="product-name">${p.name}</div>
+                    <span class="price">$${p.price} ${promoBadge}</span>
+                    <button class="add-cart-btn">AGREGAR</button>
+                </div>`;
+            
+            const imgEl = card.querySelector('.product-img');
+            const titleEl = card.querySelector('.product-name');
+            const btnEl = card.querySelector('.add-cart-btn');
+            
+            imgEl.onclick = () => openProductDetail(p.id);
+            titleEl.onclick = () => openProductDetail(p.id);
+            btnEl.onclick = (e) => {
+                e.stopPropagation(); 
+                addToCart(p.id);
+            };
+
+            container.appendChild(card);
         }
 
         // DETALLE DE PRODUCTO (MODAL)
