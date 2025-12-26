@@ -586,14 +586,7 @@
                 <label onclick="togglePaymentFields('transferencia')" class="modal-option-label">
                     <input type="radio" name="payment" value="transferencia"> 📱 Transferencia
                 </label>
-                <div id="transfer-info-wrapper" style="display:none; margin-left: 15px; margin-bottom: 10px;">
-                    <div class="alias-container">
-                        <span class="alias-text">luto.bebidas</span>
-                        <button class="copy-btn" onclick="copyAlias()">COPIAR</button>
-                    </div>
-                    <small style="color:#aaa; font-size:0.7rem; margin-top:5px; display:block;">*Envía el comprobante por WhatsApp</small>
                 </div>
-            </div>
             <button class="modal-btn btn-confirm" onclick="finalizeOrder()">ENVIAR PEDIDO</button>
             <button class="modal-btn btn-cancel" onclick="closeModal('payment-modal')">Atrás</button>
         </div>
@@ -788,8 +781,14 @@
                 promoBadge = `<span class="promo-badge">${p.promoQty}x $${p.promoPrice}</span>`;
             }
 
+            // Detectar si la imagen es una URL externa (http) o local (nombre de archivo)
+            let imageSrc = p.img;
+            if (!imageSrc.startsWith('http')) {
+                imageSrc = RUTA_IMG + imageSrc;
+            }
+
             card.innerHTML = `
-                <img src="${RUTA_IMG}${p.img}" class="product-img" onerror="this.src='https://via.placeholder.com/200?text=IMG'">
+                <img src="${imageSrc}" class="product-img" onerror="this.src='https://via.placeholder.com/200?text=IMG'">
                 <div class="product-info">
                     <div class="product-name">${p.name}</div>
                     <span class="price">$${p.price} ${promoBadge}</span>
@@ -815,7 +814,13 @@
             const p = products.find(i => i.id === id);
             if(!p) return;
 
-            document.getElementById('popup-img').src = `${RUTA_IMG}${p.img}`;
+            // Detectar URL externa o local
+            let imageSrc = p.img;
+            if (!imageSrc.startsWith('http')) {
+                imageSrc = RUTA_IMG + imageSrc;
+            }
+
+            document.getElementById('popup-img').src = imageSrc;
             document.getElementById('popup-title').innerText = p.name;
             document.getElementById('popup-price').innerText = `$${p.price}`;
             
@@ -887,10 +892,16 @@
                     priceText += ` <span style="color:#25D366; font-size:0.7rem;">(Promo aplicada)</span>`;
                 }
 
+                // Detectar imagen en carrito
+                let imageSrc = item.img;
+                if (!imageSrc.startsWith('http')) {
+                    imageSrc = RUTA_IMG + imageSrc;
+                }
+
                 con.innerHTML += `
                     <div class="cart-item">
                         <div style="display:flex; align-items:center; gap:10px;">
-                            <img src="${RUTA_IMG}${item.img}" class="cart-item-img" onerror="this.src='https://via.placeholder.com/50'">
+                            <img src="${imageSrc}" class="cart-item-img" onerror="this.src='https://via.placeholder.com/50'">
                             <div>
                                 <div style="font-weight:600; color:white;">${item.name}</div>
                                 <div style="font-size:0.8rem; color:#aaa;">${priceText}</div>
@@ -933,18 +944,7 @@
         }
 
         function togglePaymentFields(method) {
-            const trans = document.getElementById('transfer-info-wrapper');
-            if(trans) trans.style.display = method === 'transferencia' ? 'block' : 'none';
-        }
-
-        function copyAlias() {
-            navigator.clipboard.writeText("luto.bebidas");
-            const btn = document.querySelector('.copy-btn');
-            if(btn) {
-                const originalText = btn.innerText;
-                btn.innerText = "¡COPIADO!";
-                setTimeout(() => btn.innerText = originalText, 2000);
-            }
+            // Ya no hay info extra que mostrar, solo guardamos el estado visual si fuera necesario
         }
         
         // CHECKOUT
@@ -979,7 +979,7 @@
             if(pay === 'efectivo') {
                 msg += `%0A💵 Pago: Efectivo`;
             } else {
-                msg += `%0A📱 Pago: Transferencia (Alias: luto.bebidas)`;
+                msg += `%0A📱 Pago: Transferencia`;
             }
 
             window.open(`https://wa.me/${phoneNumber}?text=${msg}`, '_blank');
