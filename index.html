@@ -630,6 +630,12 @@
         let products = [];
         let cart = [];
         let deliveryType = "";
+        
+        // PAGINACIÓN
+        let currentPage = 1;
+        let productsPerPage = 12;
+        let currentFilter = 'todos';
+        let currentList = [];
 
         // Inicialización: Cargar datos
         function loadProducts() {
@@ -701,9 +707,8 @@
         
         function showBebidasEspeciales() {
             switchView('shop-view');
-            const container = document.getElementById('products-container');
-            if (!container) return;
-            container.innerHTML = '';
+            currentFilter = 'especiales';
+            currentPage = 1;
             
             // Ordenar productos por precio descendente y mostrar los más caros
             let sorted = products.slice().sort((a, b) => {
@@ -712,10 +717,8 @@
                 return priceB - priceA;
             });
             
-            sorted.forEach((p, index) => {
-                createProductCard(p, index, container);
-            });
-            
+            currentList = sorted;
+            renderShopPage();
             clearInterval(timer);
         }
         function showCart() {
@@ -755,6 +758,8 @@
 
         // TIENDA CON MEZCLA Y BÚSQUEDA
         function renderShop(filter, btn) {
+            currentFilter = filter;
+            currentPage = 1;
             const container = document.getElementById('products-container');
             if (!container) return;
             container.innerHTML = '';
@@ -789,16 +794,76 @@
                 list = products.filter(p => p.category === filter);
             }
             
-            list.forEach((p, index) => {
+            currentList = list;
+            renderShopPage();
+        }
+        
+        function renderShopPage() {
+            const container = document.getElementById('products-container');
+            if (!container) return;
+            container.innerHTML = '';
+            
+            const startIdx = (currentPage - 1) * productsPerPage;
+            const endIdx = startIdx + productsPerPage;
+            const pageItems = currentList.slice(startIdx, endIdx);
+            
+            pageItems.forEach((p, index) => {
                 createProductCard(p, index, container);
             });
+            
+            // Agregar controles de paginación
+            const totalPages = Math.ceil(currentList.length / productsPerPage);
+            if (totalPages > 1) {
+                const paginationDiv = document.createElement('div');
+                paginationDiv.style.cssText = 'display: flex; justify-content: center; gap: 10px; margin-top: 30px; padding-bottom: 20px;';
+                
+                if (currentPage > 1) {
+                    const prevBtn = document.createElement('button');
+                    prevBtn.textContent = '← Anterior';
+                    prevBtn.style.cssText = 'padding: 12px 20px; background: var(--primary-white); color: var(--dark-bg-main); border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 0.9rem;';
+                    prevBtn.onclick = prevPage;
+                    paginationDiv.appendChild(prevBtn);
+                }
+                
+                const pageInfo = document.createElement('span');
+                pageInfo.textContent = `Página ${currentPage} de ${totalPages}`;
+                pageInfo.style.cssText = 'padding: 12px 20px; color: #ccc; font-weight: bold;';
+                paginationDiv.appendChild(pageInfo);
+                
+                if (currentPage < totalPages) {
+                    const nextBtn = document.createElement('button');
+                    nextBtn.textContent = 'Siguiente →';
+                    nextBtn.style.cssText = 'padding: 12px 20px; background: var(--primary-white); color: var(--dark-bg-main); border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 0.9rem;';
+                    nextBtn.onclick = nextPage;
+                    paginationDiv.appendChild(nextBtn);
+                }
+                
+                container.parentElement.appendChild(paginationDiv);
+            }
+        }
+        
+        function nextPage() {
+            const totalPages = Math.ceil(currentList.length / productsPerPage);
+            if (currentPage < totalPages) {
+                currentPage++;
+                renderShopPage();
+                window.scrollTo(0, document.getElementById('products-container').offsetTop - 100);
+            }
+        }
+        
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                renderShopPage();
+                window.scrollTo(0, document.getElementById('products-container').offsetTop - 100);
+            }
         }
 
         // FUNCIÓN DE BÚSQUEDA GLOBAL
         function handleSearch() {
             const query = document.getElementById('search-input').value.toLowerCase();
             const container = document.getElementById('products-container');
-            container.innerHTML = '';
+            currentPage = 1;
 
             if(query.trim() === '') {
                 document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
@@ -807,7 +872,8 @@
                 
                 let list = products.slice();
                 shuffleArray(list);
-                list.forEach((p, index) => createProductCard(p, index, container));
+                currentList = list;
+                renderShopPage();
                 return;
             }
 
@@ -820,9 +886,8 @@
                 return;
             }
 
-            results.forEach((p, index) => {
-                createProductCard(p, index, container);
-            });
+            currentList = results;
+            renderShopPage();
         }
 
         // Helper para crear tarjetas (reutilizable)
