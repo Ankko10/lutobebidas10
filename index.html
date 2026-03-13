@@ -523,14 +523,15 @@
         </div>
     </div>
 
-    <div id="cart-view">
-        <div class="container" style="max-width: 800px; margin: 0 auto;">
+    <div id="cart-modal" class="modal-overlay">
+        <div class="modal-box" style="max-width: 600px; max-height: 80vh; overflow-y: auto;">
             <h2 class="serif-font" style="border-bottom: 1px solid var(--border-subtle); padding-bottom: 15px; margin-bottom: 25px; color: var(--primary-white); font-size:1.6rem;">Tu Pedido</h2>
             <div id="cart-list-container"></div>
             <div style="text-align: right; margin-top: 30px; font-size: 1.5rem; color: var(--primary-white);">
                 Total: <strong id="final-total">$0</strong>
             </div>
-            <button onclick="showShop()" style="background:none; border:none; color:var(--secondary-gray); text-decoration:underline; cursor:pointer; margin-top:25px; display:block; width:100%; font-size:0.9rem;">← Volver al catálogo</button>
+            <button onclick="handleCheckout()" class="modal-btn btn-confirm" style="margin-top: 20px;">CONTINUAR CON COMPRA</button>
+            <button onclick="closeModal('cart-modal')" class="modal-btn btn-cancel" style="margin-top: 10px;">Cerrar</button>
         </div>
     </div>
 
@@ -723,12 +724,20 @@
             clearInterval(timer);
         }
         function showCart() {
-            switchView('cart-view');
             renderCart();
-            clearInterval(timer);
+            document.getElementById('cart-modal').style.display = 'flex';
+        }
+        
+        function handleCheckout() {
+            if (cart.length === 0) {
+                alert('Tu carrito está vacío');
+                return;
+            }
+            closeModal('cart-modal');
+            openDeliveryModal();
         }
         function switchView(id) {
-            ['home-view','shop-view','cart-view','product-detail-view'].forEach(v => {
+            ['home-view','shop-view','product-detail-view'].forEach(v => {
                 const el = document.getElementById(v);
                 if (el) el.style.display = 'none';
             });
