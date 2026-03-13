@@ -990,6 +990,19 @@
             renderCart();
         }
 
+        function updateCartQty(index, change) {
+            if (cart[index]) {
+                const newQty = cart[index].qty + change;
+                if (newQty > 0) {
+                    cart[index].qty = newQty;
+                } else {
+                    cart.splice(index, 1);
+                }
+                updateCartUI();
+                renderCart();
+            }
+        }
+
         function updateCartUI() {
             const count = cart.reduce((a, b) => a + b.qty, 0);
             const badge = document.getElementById('cart-count');
@@ -1020,7 +1033,7 @@
                 const itemTotal = calculateItemTotal(item);
                 total += itemTotal;
                 
-                let priceText = `$${item.price} x ${item.qty}`;
+                let priceText = `$${item.price}`;
                 if(item.promoQty && item.qty >= item.promoQty) {
                     priceText += ` <span style="color:#25D366; font-size:0.7rem;">(Promo aplicada)</span>`;
                 }
@@ -1033,19 +1046,18 @@
 
                 con.innerHTML += `
                     <div class="cart-item">
-                        <div style="display:flex; align-items:center; gap:10px;">
+                        <div style="display:flex; align-items:center; gap:10px; flex:1;">
                             <img src="${imageSrc}" class="cart-item-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                             <div class="cart-item-fallback" style="display:none; width: 50px; height: 50px; background: #FF8E72; justify-content: center; align-items: center; color: white; font-size: 24px; border-radius: 4px;">
                                 <i class="fas fa-glass"></i>
                             </div>
-                            <div>
+                            <div style="flex:1;">
                                 <div style="font-weight:600; color:white;">${item.name}</div>
                                 <div style="font-size:0.8rem; color:#aaa;">${priceText}</div>
                             </div>
                         </div>
-                        <div style="display:flex; align-items:center; gap:10px;">
-                            <div style="color:white; font-weight:600;">$${itemTotal}</div>
-                            <button onclick="removeFromCart(${idx})" class="cart-remove-btn">×</button>
+                        <div style="display:flex; align-items:center; gap:8px; margin-left:10px;">
+                            <button onclick="updateCartQty(${idx}, -1)" style="width:30px; height:30px; padding:0; background: #333; color: white; border: 1px solid #555; border-radius: 3px; cursor: pointer; font-weight: bold;">−</button>\n                            <div style="color:white; font-weight:600; min-width:30px; text-align:center;">${item.qty}</div>\n                            <button onclick="updateCartQty(${idx}, 1)" style="width:30px; height:30px; padding:0; background: #333; color: white; border: 1px solid #555; border-radius: 3px; cursor: pointer; font-weight: bold;">+</button>\n                            <div style="color:white; font-weight:600; min-width:60px; text-align:right;">$${itemTotal}</div>\n                            <button onclick="removeFromCart(${idx})" class="cart-remove-btn">×</button>
                         </div>
                     </div>`;
             });
