@@ -519,6 +519,7 @@
                 <button class="cat-btn" onclick="renderShop('varios', this)">Varios</button>
             </div>
             <div id="products-container" class="products-grid"></div>
+            <div id="shop-pagination-container"></div>
         </div>
     </div>
 
@@ -798,12 +799,10 @@
         
         function renderShopPage() {
             const container = document.getElementById('products-container');
+            const paginationContainer = document.getElementById('shop-pagination-container');
             if (!container) return;
             container.innerHTML = '';
-            
-            // Remover paginación anterior si existe
-            const oldPagination = document.getElementById('shop-pagination');
-            if (oldPagination) oldPagination.remove();
+            paginationContainer.innerHTML = '';
             
             const startIdx = (currentPage - 1) * productsPerPage;
             const endIdx = startIdx + productsPerPage;
@@ -817,7 +816,6 @@
             const totalPages = Math.ceil(currentList.length / productsPerPage);
             if (totalPages > 1) {
                 const paginationDiv = document.createElement('div');
-                paginationDiv.id = 'shop-pagination';
                 paginationDiv.style.cssText = 'display: flex; justify-content: center; gap: 10px; margin-top: 30px; padding-bottom: 20px;';
                 
                 if (currentPage > 1) {
@@ -841,7 +839,7 @@
                     paginationDiv.appendChild(nextBtn);
                 }
                 
-                container.parentElement.appendChild(paginationDiv);
+                paginationContainer.appendChild(paginationDiv);
             }
         }
         
