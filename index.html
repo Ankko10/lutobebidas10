@@ -39,9 +39,6 @@
         button { font-family: 'Montserrat', sans-serif; }
 
         /* --- ANIMACIONES --- */
-        @keyframes falling-lights {
-          to { background-position: 0px 800px, 0px 600px, 0px 400px; }
-        }
 
         @keyframes fadeSlideUp {
             from { opacity: 0; transform: translateY(30px); }
@@ -72,6 +69,7 @@
             position: relative; z-index: 1; 
         }
         .santa-hat-img {
+            display: none;
             position: absolute;
             top: -22px;   
             left: 2px;    
@@ -206,14 +204,6 @@
             padding-top: 20px; 
             min-height: 80vh;
             background-color: var(--dark-bg-main);
-            /* LUCES BRILLANTES */
-            background-image:
-                radial-gradient(white, rgba(255,255,255,.8) 2px, transparent 6px),
-                radial-gradient(white, rgba(255,255,255,.5) 1px, transparent 3px),
-                radial-gradient(white, rgba(255,255,255,.3) 2px, transparent 4px);
-            background-size: 550px 550px, 350px 350px, 250px 250px;
-            background-position: 0 0, 0 0, 0 0;
-            animation: falling-lights 20s linear infinite;
         }
 
         /* BARRA DE BÚSQUEDA */
@@ -942,8 +932,34 @@
 
         // FLOTANTE & MODALES
         function handleFloatingButton() {
-            if(cart.length === 0) showShop();
-            else openDeliveryModal();
+            if(cart.length === 0) {
+                openPromoModal();
+            } else {
+                openDeliveryModal();
+            }
+        }
+        
+        function openPromoModal() {
+            const modal = document.getElementById('promo-modal');
+            if (!modal) {
+                const newModal = document.createElement('div');
+                newModal.id = 'promo-modal';
+                newModal.className = 'modal';
+                newModal.innerHTML = `
+                    <div class="modal-content" style="max-width: 500px;">
+                        <button class="modal-close" onclick="closeModal('promo-modal')">&times;</button>
+                        <h2 style="text-align: center; margin-bottom: 30px;">Selecciona una categoría</h2>
+                        <div style="display: flex; flex-direction: column; gap: 15px;">
+                            <button onclick="showShop(); closeModal('promo-modal');" style="padding: 15px; background: linear-gradient(135deg, #FF6B6B, #FF8E72); border: none; color: white; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">🛍️ Ver Productos</button>
+                            <button onclick="showShop(); closeModal('promo-modal');" style="padding: 15px; background: linear-gradient(135deg, #4ECDC4, #44A08D); border: none; color: white; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">⭐ Promociones</button>
+                            <button onclick="showShop(); closeModal('promo-modal');" style="padding: 15px; background: linear-gradient(135deg, #FFB347, #FFA500); border: none; color: white; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">🍹 Bebidas Especiales</button>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(newModal);
+            }
+            modal = document.getElementById('promo-modal');
+            modal.style.display = 'flex';
         }
         function updateFloatingButton() {
             const txt = document.getElementById('float-btn-text');
