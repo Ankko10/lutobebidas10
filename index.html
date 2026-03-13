@@ -909,7 +909,10 @@
             }
 
             card.innerHTML = `
-                <img src="${imageSrc}" class="product-img" onerror="this.src='https://via.placeholder.com/200?text=IMG'">
+                <img src="${imageSrc}" class="product-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="product-img-fallback" style="display:none; width: 100%; height: 150px; background: linear-gradient(135deg, #FF6B6B, #FF8E72); justify-content: center; align-items: center; font-size: 60px; color: white;">
+                    <i class="fas fa-wine-glass"></i>
+                </div>
                 <div class="product-info">
                     <div class="product-name">${p.name}</div>
                     <span class="price">$${p.price} ${promoBadge}</span>
@@ -1022,7 +1025,10 @@
                 con.innerHTML += `
                     <div class="cart-item">
                         <div style="display:flex; align-items:center; gap:10px;">
-                            <img src="${imageSrc}" class="cart-item-img" onerror="this.src='https://via.placeholder.com/50'">
+                            <img src="${imageSrc}" class="cart-item-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="cart-item-fallback" style="display:none; width: 50px; height: 50px; background: #FF8E72; justify-content: center; align-items: center; color: white; font-size: 24px; border-radius: 4px;">
+                                <i class="fas fa-glass"></i>
+                            </div>
                             <div>
                                 <div style="font-weight:600; color:white;">${item.name}</div>
                                 <div style="font-size:0.8rem; color:#aaa;">${priceText}</div>
