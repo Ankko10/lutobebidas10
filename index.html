@@ -27,29 +27,17 @@
 </section>
 
 <section id="productos" class="productos">
-    <h2>Nuestros Productos</h2>
-
-    <div class="grid">
-        <div class="card">
-            <img src="https://via.placeholder.com/250" alt="Bebida">
-            <h3>Cerveza</h3>
-            <p>$2500</p>
-            <button>Agregar</button>
-        </div>
-
-        <div class="card">
-            <img src="https://via.placeholder.com/250" alt="Bebida">
-            <h3>Vodka</h3>
-            <p>$6000</p>
-            <button>Agregar</button>
-        </div>
-
-        <div class="card">
-            <img src="https://via.placeholder.com/250" alt="Bebida">
-            <h3>Fernet</h3>
-            <p>$7000</p>
-            <button>Agregar</button>
-        </div>
+    <div class="productos-header">
+        <h2>Nuestros Productos</h2>
+        <button id="recargarBtn" class="btn-recargar" title="Recargar productos desde la hoja">🔄 Recargar</button>
+    </div>
+    
+    <div class="filtros">
+        <button class="filtro-btn active" data-categoria="todos">Todos</button>
+    </div>
+    
+    <div class="grid" id="gridProductos">
+        <!-- Los productos se cargarán aquí dinámicamente -->
     </div>
 </section>
 

@@ -1,0 +1,86 @@
+[
+    {
+        "id": 1,
+        "nombre": "Cerveza Brahma",
+        "precio": 2500,
+        "descripcion": "Cerveza fría y refrescante",
+        "imagen": "img/brahmapack.png"
+    },
+    {
+        "id": 2,
+        "nombre": "Vodka Smirnoff",
+        "precio": 6000,
+        "descripcion": "Vodka premium importado",
+        "imagen": "img/smirnoff.png"
+    },
+    {
+        "id": 3,
+        "nombre": "Fernet Branca",
+        "precio": 7000,
+        "descripcion": "Fernet Branca de alta calidad",
+        "imagen": "img/fernet1lt.png"
+    },
+    {
+        "id": 4,
+        "nombre": "Heineken",
+        "precio": 3000,
+        "descripcion": "Cerveza premium holandesa",
+        "imagen": "img/heinekenpack.png"
+    },
+    {
+        "id": 5,
+        "nombre": "Whisky Red Label",
+        "precio": 8500,
+        "descripcion": "Whisky escocés de calidad",
+        "imagen": "img/redlabel_700.png"
+    },
+    {
+        "id": 6,
+        "nombre": "Gin Beefeater",
+        "precio": 5500,
+        "descripcion": "Gin inglés clásico",
+        "imagen": "img/beefeater_700.png"
+    },
+    {
+        "id": 7,
+        "nombre": "Vino Rutini",
+        "precio": 3500,
+        "descripcion": "Vino tinto argentino",
+        "imagen": "img/rutini.png"
+    },
+    {
+        "id": 8,
+        "nombre": "Energizante Red Bull",
+        "precio": 1800,
+        "descripcion": "Bebida energizante",
+        "imagen": "img/redbull.png"
+    },
+    {
+        "id": 9,
+        "nombre": "Coca Cola 2L",
+        "precio": 1200,
+        "descripcion": "Refrescante bebida cola",
+        "imagen": "img/cocaret2l.png"
+    },
+    {
+        "id": 10,
+        "nombre": "Sprite 2L",
+        "precio": 1200,
+        "descripcion": "Bebida refrescante limón",
+        "imagen": "img/sprite225.png"
+    },
+    {
+        "id": 11,
+        "nombre": "Corona 750ml",
+        "precio": 2800,
+        "descripcion": "Cerveza mexicana",
+        "imagen": "img/corona750.png"
+    },
+    {
+        "id": 12,
+        "nombre": "Campari",
+        "precio": 4500,
+        "descripcion": "Bebida aperitivo italiano",
+        "imagen": "img/campari.png"
+    }
+]
