@@ -35,7 +35,6 @@ async function cargarProductosDesdeSheet() {
         
         // Parsear CSV
         const lineas = csv.trim().split('\n');
-        const headers = lineas[0].split(',').map(h => h.trim().toLowerCase());
         
         productosGlobales = [];
         categoriasUnicas.clear();
@@ -88,6 +87,8 @@ async function cargarProductosDesdeSheet() {
         inicializarEventosFiltro();
         inicializarBotones();
         
+        console.log('Productos cargados:', productosGlobales.length);
+        
         // Feedback al usuario
         if (recargarBtn) {
             recargarBtn.disabled = false;
@@ -98,6 +99,7 @@ async function cargarProductosDesdeSheet() {
         console.error('Error al cargar productos:', error);
         document.getElementById('gridProductos').innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: red;">Error al cargar los productos</p>';
         
+        const recargarBtn = document.getElementById('recargarBtn');
         if (recargarBtn) {
             recargarBtn.disabled = false;
             recargarBtn.textContent = '🔄 Recargar';
@@ -347,7 +349,7 @@ document.head.appendChild(style);
 
 // Obtener información del carrito
 function obtenerInfoCarrito() {
-    const total = carrito.reduce((sum, item) => sum + (item.precio * item.cantidad), 0);
+    const total = carrito.reduce((sum, item) => sum + (parseFloat(item.precio) * item.cantidad), 0);
     const cantidad = carrito.reduce((sum, item) => sum + item.cantidad, 0);
     
     return {
