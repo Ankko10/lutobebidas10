@@ -569,11 +569,11 @@
         <div class="modal-box">
             <h3 class="serif-font" style="font-size:1.5rem; margin-bottom:20px; color:#fff;">¿Qué buscas?</h3>
             <div style="display: flex; flex-direction: column; gap: 12px; text-align: center;">
-                <button class="modal-btn btn-confirm" onclick="closeModal('promo-modal'); setTimeout(() => showAllProducts(), 100);" style="background: linear-gradient(135deg, #FF6B6B, #FF8E72);">🛍️ Ver Productos</button>
-                <button class="modal-btn btn-confirm" onclick="closeModal('promo-modal'); setTimeout(() => showPromociones(), 100);" style="background: linear-gradient(135deg, #4ECDC4, #44A08D);">⭐ Promociones</button>
-                <button class="modal-btn btn-confirm" onclick="closeModal('promo-modal'); setTimeout(() => showBebidasEspeciales(), 100);" style="background: linear-gradient(135deg, #FFB347, #FFA500);">🍹 Bebidas Especiales</button>
+                <button class="modal-btn btn-confirm" onclick="closePromoAndExecute(showAllProducts)">🛍️ Ver Productos</button>
+                <button class="modal-btn btn-confirm" onclick="closePromoAndExecute(showPromociones)">⭐ Promociones</button>
+                <button class="modal-btn btn-confirm" onclick="closePromoAndExecute(showBebidasEspeciales)">🍹 Bebidas Especiales</button>
             </div>
-            <button class="modal-btn btn-cancel" onclick="closeModal('promo-modal')" style="margin-top: 15px;">Cerrar</button>
+            <button class="modal-btn btn-cancel" onclick="closePromoAndExecute(null)" style="margin-top: 15px;">Cerrar</button>
         </div>
     </div>
 
@@ -998,6 +998,16 @@
                 modal.style.display = 'none';
                 modal.classList.remove('closing');
             }, 300);
+        }
+        
+        function closePromoAndExecute(callback) {
+            const modal = document.getElementById('promo-modal');
+            modal.classList.add('closing');
+            setTimeout(() => {
+                modal.style.display = 'none';
+                modal.classList.remove('closing');
+                if (callback) callback();
+            }, 350);
         }
         
         function nextStepToPayment() {
