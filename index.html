@@ -569,9 +569,9 @@
         <div class="modal-box">
             <h3 class="serif-font" style="font-size:1.5rem; margin-bottom:20px; color:#fff;">¿Qué buscas?</h3>
             <div style="display: flex; flex-direction: column; gap: 12px; text-align: center;">
-                <button class="modal-btn btn-confirm" onclick="showShop(); closeModal('promo-modal');" style="background: linear-gradient(135deg, #FF6B6B, #FF8E72);">🛍️ Ver Productos</button>
-                <button class="modal-btn btn-confirm" onclick="showShop(); closeModal('promo-modal');" style="background: linear-gradient(135deg, #4ECDC4, #44A08D);">⭐ Promociones</button>
-                <button class="modal-btn btn-confirm" onclick="showShop(); closeModal('promo-modal');" style="background: linear-gradient(135deg, #FFB347, #FFA500);">🍹 Bebidas Especiales</button>
+                <button class="modal-btn btn-confirm" onclick="closeModal('promo-modal'); setTimeout(() => showAllProducts(), 100);" style="background: linear-gradient(135deg, #FF6B6B, #FF8E72);">🛍️ Ver Productos</button>
+                <button class="modal-btn btn-confirm" onclick="closeModal('promo-modal'); setTimeout(() => showPromociones(), 100);" style="background: linear-gradient(135deg, #4ECDC4, #44A08D);">⭐ Promociones</button>
+                <button class="modal-btn btn-confirm" onclick="closeModal('promo-modal'); setTimeout(() => showBebidasEspeciales(), 100);" style="background: linear-gradient(135deg, #FFB347, #FFA500);">🍹 Bebidas Especiales</button>
             </div>
             <button class="modal-btn btn-cancel" onclick="closeModal('promo-modal')" style="margin-top: 15px;">Cerrar</button>
         </div>
@@ -685,9 +685,37 @@
             switchView('home-view');
             resetTimer();
         }
-        function showShop() {
+        function showShop(filter = 'todos') {
             switchView('shop-view');
-            renderShop('todos', null); 
+            renderShop(filter, null); 
+            clearInterval(timer);
+        }
+        
+        function showAllProducts() {
+            showShop('todos');
+        }
+        
+        function showPromociones() {
+            showShop('promociones-navidenas');
+        }
+        
+        function showBebidasEspeciales() {
+            switchView('shop-view');
+            const container = document.getElementById('products-container');
+            if (!container) return;
+            container.innerHTML = '';
+            
+            // Ordenar productos por precio descendente y mostrar los más caros
+            let sorted = products.slice().sort((a, b) => {
+                const priceA = parseFloat(a.price) || 0;
+                const priceB = parseFloat(b.price) || 0;
+                return priceB - priceA;
+            });
+            
+            sorted.forEach((p, index) => {
+                createProductCard(p, index, container);
+            });
+            
             clearInterval(timer);
         }
         function showCart() {
