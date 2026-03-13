@@ -803,6 +803,10 @@
             if (!container) return;
             container.innerHTML = '';
             
+            // Remover paginación anterior si existe
+            const oldPagination = document.getElementById('shop-pagination');
+            if (oldPagination) oldPagination.remove();
+            
             const startIdx = (currentPage - 1) * productsPerPage;
             const endIdx = startIdx + productsPerPage;
             const pageItems = currentList.slice(startIdx, endIdx);
@@ -815,6 +819,7 @@
             const totalPages = Math.ceil(currentList.length / productsPerPage);
             if (totalPages > 1) {
                 const paginationDiv = document.createElement('div');
+                paginationDiv.id = 'shop-pagination';
                 paginationDiv.style.cssText = 'display: flex; justify-content: center; gap: 10px; margin-top: 30px; padding-bottom: 20px;';
                 
                 if (currentPage > 1) {
