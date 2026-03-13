@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luto Bebidas</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="header">
+    <nav class="navbar">
+        <h1 class="logo">Luto Bebidas</h1>
+        <ul class="nav-links">
+            <li><a href="#inicio">Inicio</a></li>
+            <li><a href="#productos">Productos</a></li>
+            <li><a href="#nosotros">Nosotros</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+        </ul>
+    </nav>
+</header>
+
+<section id="inicio" class="hero">
+    <h2>Las mejores bebidas, al mejor precio</h2>
+    <p>Calidad, sabor y entrega rápida</p>
+    <a href="#productos" class="btn">Ver productos</a>
+</section>
+
+<section id="productos" class="productos">
+    <h2>Nuestros Productos</h2>
+
+    <div class="grid">
+        <div class="card">
+            <img src="https://via.placeholder.com/250" alt="Bebida">
+            <h3>Cerveza</h3>
+            <p>$2500</p>
+            <button>Agregar</button>
+        </div>
+
+        <div class="card">
+            <img src="https://via.placeholder.com/250" alt="Bebida">
+            <h3>Vodka</h3>
+            <p>$6000</p>
+            <button>Agregar</button>
+        </div>
+
+        <div class="card">
+            <img src="https://via.placeholder.com/250" alt="Bebida">
+            <h3>Fernet</h3>
+            <p>$7000</p>
+            <button>Agregar</button>
+        </div>
+    </div>
+</section>
+
+<section id="nosotros" class="nosotros">
+    <h2>Sobre Nosotros</h2>
+    <p>
+        Somos Luto Bebidas, un emprendimiento dedicado a la venta de bebidas
+        con atención personalizada y precios accesibles.
+    </p>
+</section>
+
+<section id="contacto" class="contacto">
+    <h2>Contacto</h2>
+    <p>📍 Tu ciudad</p>
+    <p>📞 +54 9 11 1234 5678</p>
+    <a class="btn whatsapp" href="https://wa.me/5491112345678" target="_blank">
+        Contactar por WhatsApp
+    </a>
+</section>
+
+<footer class="footer">
+    <p>© 2026 Luto Bebidas - Todos los derechos reservados</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Navbar */
+.header {
+    background: #111;
+    position: sticky;
+    top: 0;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 30px;
+    align-items: center;
+}
+
+.logo {
+    color: #fff;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+}
+
+/* Hero */
+.hero {
+    height: 80vh;
+    background: linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.6)),
+    url("https://via.placeholder.com/1200") center/cover;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.btn {
+    background: #e63946;
+    color: white;
+    padding: 12px 20px;
+    margin-top: 15px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+/* Productos */
+.productos {
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+    margin-top: 30px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 5px 10px rgba(0,0,0,.1);
+}
+
+.card img {
+    width: 100%;
+    border-radius: 5px;
+}
+
+.card button {
+    margin-top: 10px;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    background: #111;
+    color: white;
+    cursor: pointer;
+}
+
+/* Nosotros y contacto */
+.nosotros, .contacto {
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.whatsapp {
+    background: #25d366;
+}
+
+/* Footer */
+.footer {
+    background: #111;
+    color: white;
+    text-align: center;
+    padding: 15px;
+}
+document.querySelectorAll(".card button").forEach(boton => {
+    boton.addEventListener("click", () => {
+        alert("Producto agregado (demo)");
+    });
+});
