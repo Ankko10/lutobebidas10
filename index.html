@@ -747,13 +747,9 @@
             if(el) el.scrollIntoView({behavior:'smooth'});
         }
 
-        // --- FUNCIÓN PARA MEZCLAR (SHUFFLE) ---
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-            return array;
+        // --- FUNCIÓN PARA ORDENAR ALFABÉTICAMENTE ---
+        function sortByName(array) {
+            return array.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
         }
 
         // TIENDA CON MEZCLA Y BÚSQUEDA
@@ -782,16 +778,18 @@
             let list = [];
             // Copiamos el array para no modificar el original al filtrar
             if (filter === 'todos') {
-                list = products.slice(); 
-                shuffleArray(list);   
+                list = products.slice();
+                list = sortByName(list);
             } else if (filter === 'promociones-navidenas') {
                 list = products.filter(p => p.category === filter);
-                shuffleArray(list);   
+                list = sortByName(list);
             } else if (filter === 'sin-alcohol' || filter === 'jugos-energizantes') {
                 list = products.filter(p => p.category === filter || (filter === 'sin-alcohol' && p.category === 'jugos-energizantes'));
                 list = products.filter(p => p.category === filter);
+                list = sortByName(list);
             } else {
                 list = products.filter(p => p.category === filter);
+                list = sortByName(list);
             }
             
             currentList = list;
@@ -876,7 +874,7 @@
                 if(allBtn) allBtn.classList.add('active');
                 
                 let list = products.slice();
-                shuffleArray(list);
+                list = sortByName(list);
                 currentList = list;
                 renderShopPage();
                 return;
