@@ -530,6 +530,18 @@
         <div class="map-section">
             <iframe src="https://maps.google.com/maps?q=Gutierrez+1248,+Santa+Fe,+Argentina&t=&z=15&ie=UTF8&iwloc=&output=embed" allowfullscreen="" loading="lazy"></iframe>
         </div>
+        
+        <!-- PIE DE PÁGINA PERSONALIZADO -->
+        <footer style="background: #050505; color: var(--secondary-gray); padding: 40px 20px; text-align: center; border-top: 1px solid var(--border-subtle);">
+            <div style="display: flex; justify-content: center; align-items: center; gap: 40px; margin-bottom: 25px; flex-wrap: wrap;">
+                <a href="https://instagram.com/luto.bebidas" target="_blank" style="color: #999; text-decoration: none; display: flex; align-items: center; gap: 10px; font-size: 0.9rem;"><i class="fab fa-instagram"></i> luto.bebidas</a>
+                <a href="https://wa.me/5493424368831" target="_blank" style="color: #999; text-decoration: none; display: flex; align-items: center; gap: 10px; font-size: 0.9rem;"><i class="fab fa-whatsapp"></i> 3424368831</a>
+            </div>
+            <p style="font-size: 0.7rem; opacity: 0.4; margin: 15px 0; letter-spacing: 1px;">© 2024 Luto Bebidas - Distribuidora Online</p>
+            <div style="font-size: 0.65rem; color: #666; border-top: 1px solid #222; padding-top: 10px;">
+                Desarrollado por <a href="https://instagram.com/antoniniuriel" target="_blank" style="color: #888; text-decoration: none; font-weight: 600; transition: color 0.3s;">Uriel Antonini</a>
+            </div>
+        </footer>
     </div>
 
     <div id="shop-view">
@@ -540,6 +552,10 @@
              </div>
 
              <h2 class="serif-font" style="text-align:center; margin-bottom:20px; color: var(--primary-white); font-size:1.8rem; letter-spacing: 1px;">Catálogo</h2>
+             
+             <!-- CARRUSEL DE PRODUCTOS ELABORADOS -->
+             <div id="elaborados-carousel-container" style="margin-bottom: 30px;"></div>
+             
             <div class="categories-nav">
                 <button class="cat-btn active" onclick="renderShop('todos', this)">Todos</button>
                 <button class="cat-btn" onclick="renderShop('promociones-navidenas', this)">🔥 Promos</button>
@@ -688,6 +704,7 @@
                     products = results.data;
                     // Filtramos filas vacías por si acaso
                     products = products.filter(p => p.id && p.name);
+                    renderElaboradosCarousel(); // Renderizar carrusel al cargar
                     showHome(); // Iniciamos la app una vez que hay datos
                 },
                 error: function(err) {
@@ -830,7 +847,8 @@
                 list = products.slice();
                 list = sortByName(list);
             } else if (filter === 'promociones-navidenas') {
-                list = products.filter(p => p.category === filter);
+                // Mostrar TODOS los productos que tienen promoQty (combinaciones/elaborados)
+                list = products.filter(p => p.promoQty && p.promoQty > 1);
                 list = sortByName(list);
             } else if (filter === 'sin-alcohol' || filter === 'jugos-energizantes') {
                 list = products.filter(p => p.category === filter || (filter === 'sin-alcohol' && p.category === 'jugos-energizantes'));
@@ -842,7 +860,54 @@
             }
             
             currentList = list;
+            
+            // Renderizar carrusel de elaborados si estamos en shop-view
+            if (filter === 'todos') {
+                renderElaboradosCarousel();
+            }
+            
             renderShopPage();
+        }
+        
+        // CARRUSEL DE PRODUCTOS ELABORADOS
+        function renderElaboradosCarousel() {
+            const container = document.getElementById('elaborados-carousel-container');
+            if (!container) return;
+            
+            const elaborados = products.filter(p => p.promoQty && p.promoQty > 1).slice(0, 6);
+            if (elaborados.length === 0) {
+                container.innerHTML = '';
+                return;
+            }
+            
+            container.innerHTML = `
+                <div style="text-align: center; margin-bottom: 15px;">
+                    <h3 class="serif-font" style="color: var(--primary-white); font-size: 1.2rem; letter-spacing: 1px;">🍹 Productos Elaborados</h3>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 15px; overflow-x: auto; padding: 10px 0;" id="elaborados-grid"></div>
+            `;
+            
+            const grid = container.querySelector('#elaborados-grid');
+            elaborados.forEach(p => {
+                let imageSrc = p.img;
+                if (!imageSrc.startsWith('http')) {
+                    imageSrc = RUTA_IMG + imageSrc;
+                }
+                
+                const card = document.createElement('div');
+                card.style.cssText = 'background: var(--dark-bg-secondary); border: 1px solid var(--border-subtle); border-radius: 4px; overflow: hidden; text-align: center; cursor: pointer; transition: all 0.3s; padding: 10px;';
+                card.innerHTML = `
+                    <img src="${imageSrc}" style="width: 100%; height: 80px; object-fit: contain; margin-bottom: 8px;" onerror="this.style.display='none';">
+                    <div style="font-size: 0.75rem; color: #fff; font-weight: 500; line-height: 1.2; margin-bottom: 6px;">${p.name}</div>
+                    <div style="font-size: 0.85rem; font-weight: 700; color: var(--primary-white);">$${p.promoPrice}</div>
+                `;
+                
+                card.onmouseover = () => card.style.borderColor = '#fff';
+                card.onmouseout = () => card.style.borderColor = 'var(--border-subtle)';
+                card.onclick = () => openProductDetail(p.id);
+                
+                grid.appendChild(card);
+            });
         }
         
         function renderShopPage() {
